@@ -10,7 +10,8 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'users', component: UserListComponent},
   {path: 'users/new', component: AddUserComponent},
-  {path: 'users/:id', component: UserProfileComponent}
+  {path: 'users/:id', component: UserProfileComponent},
+  //{path: 'context-packs', component: }
 ];
 
 @NgModule({
