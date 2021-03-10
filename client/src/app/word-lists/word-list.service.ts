@@ -2,12 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ContextPack } from './context-pack';
+import { WordList } from './word-list';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
-  readonly userUrl: string = environment.apiUrl + 'context-packs';
+  readonly wordListUrl: string = environment.apiUrl + 'word-list';
 
   constructor(private httpClient: HttpClient) {
   }

@@ -1,10 +1,12 @@
-export interface Context-pack {
+import { WordList } from "../word-lists/word-list";
+
+export interface ContextPack {
   _id: string;
   $schema: string;
   name: string;
   icon: string;
   enabled: boolean;
-  wordpacks: ?; //Will be a new type wordlists
+  wordLists: WordList; //Will be a new type wordlists
 }
 
 

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ContextPack } from './context-pack';
-import { UserService } from './context-pack.service';
+import { WordList } from './word-list';
+import { UserService } from './word-list.service';
 
 describe('User service: ', () => {
   // A small collection of test users
