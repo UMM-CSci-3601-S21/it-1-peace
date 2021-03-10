@@ -6,59 +6,51 @@ import { WordList } from './word-list';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class UserService {
+export class WordListService {
   readonly wordListUrl: string = environment.apiUrl + 'word-list';
 
   constructor(private httpClient: HttpClient) {
   }
 
-  /*
-  getUsers(filters?: { role?: UserRole; age?: number; company?: string }): Observable<User[]> {
+  getWordLists(filters?: { enabled?: boolean; name?: string; }): Observable<WordList[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
-      if (filters.role) {
-        httpParams = httpParams.set('role', filters.role);
+      if (filters.enabled) {
+        httpParams = httpParams.set('enabled', filters.enabled.toString());
       }
-      if (filters.age) {
-        httpParams = httpParams.set('age', filters.age.toString());
-      }
-      if (filters.company) {
-        httpParams = httpParams.set('company', filters.company);
+      if (filters.name) {
+        httpParams = httpParams.set('name', filters.name);
       }
     }
-    return this.httpClient.get<User[]>(this.userUrl, {
+    return this.httpClient.get<WordList[]>(this.wordListUrl, {
       params: httpParams,
     });
   }
 
-  getUserById(id: string): Observable<User> {
-    return this.httpClient.get<User>(this.userUrl + '/' + id);
+  getWordListById(id: string): Observable<WordList> {
+    return this.httpClient.get<WordList>(this.wordListUrl + '/' + id);
   }
 
-  filterUsers(users: User[], filters: { name?: string; company?: string }): User[] {
+  filterWordLists(wordLists: WordList[], filters: { enabled?: boolean; name?: string; }): WordList[] {
 
-    let filteredUsers = users;
+    let filteredWordLists = wordLists;
 
-    // Filter by name
+    // Filter by enabled or disabled
+    if (filters.enabled) {
+      filteredWordLists = filteredWordLists.filter(wordLists => wordLists.enabled == filters.enabled);
+    }
+
     if (filters.name) {
       filters.name = filters.name.toLowerCase();
-
-      filteredUsers = filteredUsers.filter(user => user.name.toLowerCase().indexOf(filters.name) !== -1);
+      filteredWordLists = filteredWordLists.filter(wordLists => wordLists.name == filters.name);
     }
 
-    // Filter by company
-    if (filters.company) {
-      filters.company = filters.company.toLowerCase();
-
-      filteredUsers = filteredUsers.filter(user => user.company.toLowerCase().indexOf(filters.company) !== -1);
-    }
-
-    return filteredUsers;
+    return filteredWordLists;
   }
 
-  addUser(newUser: User): Observable<string> {
+  addWordList(newWordList: WordList): Observable<string> {
     // Send post request to add a new user with the user data as the body.
-    return this.httpClient.post<{id: string}>(this.userUrl, newUser).pipe(map(res => res.id));
+    return this.httpClient.post<{id: string}>(this.wordListUrl, newWordList).pipe(map(res => res.id));
   }
-  */
+
 }

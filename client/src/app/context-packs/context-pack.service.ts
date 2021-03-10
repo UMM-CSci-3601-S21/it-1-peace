@@ -6,7 +6,7 @@ import { ContextPack } from './context-pack';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class UserService {
+export class ContextPackService {
   readonly userUrl: string = environment.apiUrl + 'context-packs';
 
   constructor(private httpClient: HttpClient) {
