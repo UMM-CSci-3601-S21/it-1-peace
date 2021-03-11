@@ -8,7 +8,6 @@ public class ContextPack {
   @ObjectId @Id
   public String _id;
 
-  public String $schema;
   public String name;
   public String icon;
   public boolean enabled;

@@ -29,11 +29,10 @@ import io.javalin.http.NotFoundResponse;
  */
 public class ContextPackController {
 
-  private static final String AGE_KEY = "age";
-  private static final String COMPANY_KEY = "company";
-  private static final String ROLE_KEY = "role";
+  private static final String NAME_KEY = "name";
+  private static final String ICON_KEY = "icon";
+  private static final String ENABLED_KEY = "enabled";
 
-  static String emailRegex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
   private final JacksonMongoCollection<ContextPack> contextPackCollection;
 
@@ -88,20 +87,19 @@ public class ContextPackController {
 
     List<Bson> filters = new ArrayList<>(); // start with a blank document
 
-    /*
-    if (ctx.queryParamMap().containsKey(AGE_KEY)) {
-        int targetAge = ctx.queryParam(AGE_KEY, Integer.class).get();
-        filters.add(eq(AGE_KEY, targetAge));
+
+    if (ctx.queryParamMap().containsKey(NAME_KEY)) {
+      filters.add(regex(NAME_KEY,  Pattern.quote(ctx.queryParam(NAME_KEY)), "i"));
     }
 
-    if (ctx.queryParamMap().containsKey(COMPANY_KEY)) {
-      filters.add(regex(COMPANY_KEY,  Pattern.quote(ctx.queryParam(COMPANY_KEY)), "i"));
+    if (ctx.queryParamMap().containsKey(ICON_KEY)) {
+      filters.add(regex(ICON_KEY,  Pattern.quote(ctx.queryParam(ICON_KEY)), "i"));
     }
 
-    if (ctx.queryParamMap().containsKey(ROLE_KEY)) {
-      filters.add(eq(ROLE_KEY, ctx.queryParam(ROLE_KEY)));
+    if (ctx.queryParamMap().containsKey(ENABLED_KEY)) {
+      filters.add(eq(ENABLED_KEY, ctx.queryParam(ENABLED_KEY)));
     }
-    */
+
     String sortBy = ctx.queryParam("sortby", "name"); //Sort by sort query param, default is name
     String sortOrder = ctx.queryParam("sortorder", "asc");
 

@@ -13,14 +13,11 @@ export class CtxPkService {
   }
 
 
-  getCtxPks(filters?: { $schema?: string; name?: string; enabled?: string }): Observable<CtxPk[]> {
+  getCtxPks(filters?: { name?: string; enabled?: boolean }): Observable<CtxPk[]> {
 
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {
-      if (filters.$schema) {
-        httpParams = httpParams.set('$schema', filters.$schema);
-      }
       if (filters.name) {
         httpParams = httpParams.set('name', filters.name);
       }
@@ -37,24 +34,24 @@ export class CtxPkService {
       params: httpParams,
     });
   }
-  /*
-  getUserById(id: string): Observable<User> {
-    return this.httpClient.get<User>(this.userUrl + '/' + id);
+
+  getCtxPksById(id: string): Observable<CtxPk> {
+    return this.httpClient.get<CtxPk>(this.ctxPkUrl + '/' + id);
   }
 
-  filterUsers(users: User[], filters: { name?: string; company?: string }): User[] {
+  filterCtxPks(ctxPks: CtxPk[], filters: { name?: string; enabled?: boolean }): CtxPk[] {
 
-    let filteredUsers = users;
+    let filteredCtxPks = ctxPks;
 
     // Filter by name
     if (filters.name) {
       filters.name = filters.name.toLowerCase();
 
-      filteredUsers = filteredUsers.filter(user => user.name.toLowerCase().indexOf(filters.name) !== -1);
+      filteredCtxPks = filteredCtxPks.filter(ctxPk => ctxPk.name.toLowerCase().indexOf(filters.name) !== -1);
     }
 
     // Filter by company
-    if (filters.company) {
+    if (filters.enabled) {
       filters.company = filters.company.toLowerCase();
 
       filteredUsers = filteredUsers.filter(user => user.company.toLowerCase().indexOf(filters.company) !== -1);
@@ -67,5 +64,5 @@ export class CtxPkService {
     // Send post request to add a new user with the user data as the body.
     return this.httpClient.post<{id: string}>(this.userUrl, newUser).pipe(map(res => res.id));
   }
-  */
+
 }

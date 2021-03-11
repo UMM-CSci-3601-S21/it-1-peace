@@ -12,10 +12,9 @@ import { Subscription } from 'rxjs';
 
 export class CtxPkListComponent implements OnInit, OnDestroy  {
   // These are public so that tests can reference them (.spec.ts)
-  //public serverFilteredUsers: User[];
-  //public filteredUsers: User[];
+  public serverFilteredCtxPks: CtxPk[];
+  public filteredCtxPks: CtxPk[];
 
-  public ctxPk$schema: string;
   public ctxPkName: string;
   public ctxPkIcon: string;
   public ctxPkEnabled: boolean;
@@ -36,10 +35,10 @@ export class CtxPkListComponent implements OnInit, OnDestroy  {
   getCtxPksFromServer(): void {
     this.unsub();
     this.getCtxPksSub = this.ctxPkService.getCtxPks({
-      //role: this.userRole,
-      //age: this.userAge
-    }).subscribe(returnedCtxPkss => {
-      //this.serverFilteredUsers = returnedUsers;
+      name: this.ctxPkName,
+      enabled: this.ctxPkEnabled
+    }).subscribe(returnedCtxPks => {
+      this.serverFilteredCtxPks = returnedCtxPks;
       this.updateFilter();
     }, err => {
       console.log(err);
@@ -47,8 +46,8 @@ export class CtxPkListComponent implements OnInit, OnDestroy  {
   }
 
   public updateFilter(): void {
-    //this.filteredUsers = this.userService.filterUsers(
-      //this.serverFilteredUsers, { name: this.userName, company: this.userCompany });
+    this.filteredCtxPks = this.ctxPkService.filterContextPacks(
+      this.serverFilteredUsers, { name: this.userName, company: this.userCompany });
   }
 
 

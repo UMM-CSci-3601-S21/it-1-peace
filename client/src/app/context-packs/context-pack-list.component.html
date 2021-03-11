@@ -27,3 +27,32 @@
   </div>
 </div>
 
+<div fxLayout="row">
+      <!-- List view -->
+      <mat-card>
+        <mat-card-content>
+          <mat-nav-list class="context-pack-nav-list">
+            <h3 mat-subheader>Context packs</h3>
+            <a mat-list-item *ngFor="let contextPack of this.filteredCtxPks" [routerLink]="['/context-packs', contextPack._id]" class="context-pack-list-item">
+              <h3 matLine class="context-pack-list-name"> {{contextPack.name}} </h3>
+              <p matLine class="context-pack-list-enabled"> {{contextPack.enabled}} </p>
+            </a>
+          </mat-nav-list>
+        </mat-card-content>
+      </mat-card>
+
+  <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
+  <ng-template #usersError>
+    <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="user-error">
+      <mat-error>
+        There was a problem loading the users. Possibly the server is down or perhaps there are network
+        issues.
+      </mat-error>
+      <mat-error>
+        Please wait a bit and try again or start the server.
+      </mat-error>
+    </div>
+  </ng-template>
+
+</div>
+
