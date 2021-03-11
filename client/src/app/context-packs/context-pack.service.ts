@@ -2,18 +2,19 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Context-pack } from './context-pack';
+import { CtxPk } from './context-pack';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class UserService {
-  readonly userUrl: string = environment.apiUrl + 'context-packs';
+export class CtxPkService {
+  readonly ctxPkUrl: string = environment.apiUrl + 'context-packs';
 
   constructor(private httpClient: HttpClient) {
   }
 
-  /*
-  getUsers(filters?: { role?: UserRole; age?: number; company?: string }): Observable<User[]> {
+
+  getCtxPks(filters?: { /*role?: UserRole; age?: number; company?: string */}): Observable<CtxPk[]> {
+    /*
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.role) {
@@ -29,8 +30,9 @@ export class UserService {
     return this.httpClient.get<User[]>(this.userUrl, {
       params: httpParams,
     });
+    */
   }
-
+  /*
   getUserById(id: string): Observable<User> {
     return this.httpClient.get<User>(this.userUrl + '/' + id);
   }

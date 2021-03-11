@@ -33,7 +33,8 @@ import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 
-import { Context-packService } from './context-packs/context-pack.service';
+import { CtxPkService } from './context-packs/context-pack.service';
+import { CtxPkListComponent } from './context-packs/context-pack-list.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -62,6 +63,7 @@ const MATERIAL_MODULES: any[] = [
     UserCardComponent,
     UserProfileComponent,
     AddUserComponent,
+    CtxPkListComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,7 @@ const MATERIAL_MODULES: any[] = [
   ],
   providers: [
     UserService,
-    Context-packService,
+    CtxPkService,
   ],
   bootstrap: [AppComponent]
 })

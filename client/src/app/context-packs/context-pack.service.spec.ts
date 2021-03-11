@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Context-pack } from './context-pack';
-import { UserService } from './context-pack.service';
+import { CtxPk } from './context-pack';
+import { CtxPkService } from './context-pack.service';
 
-describe('User service: ', () => {
+describe('Context pack service: ', () => {
   // A small collection of test users
   /**
   const testUsers: User[] = [
