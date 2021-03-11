@@ -1,6 +1,29 @@
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
 
+    <mat-card class="search-card">
+      <mat-card-title class="context-pack-list-title">Context Packs</mat-card-title>
+      <mat-card-content fxLayout="column" >
 
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <!-- Examples of filtering in Angular -->
+
+          <mat-form-field class="input-field">
+            <mat-label>Name</mat-label>
+            <input matInput data-test="ctxPkNameInput" placeholder="Filter by name"
+            [(ngModel)]="ctxPkName" (input)="updateFilter()">
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Enabled</mat-label>
+            <input matInput data-test="ctxPkEnabledInput" placeholder="Filter by enabled"
+            [(ngModel)]="ctxPkEnabled" (input)="updateFilter()">
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>
+

@@ -13,24 +13,29 @@ export class CtxPkService {
   }
 
 
-  getCtxPks(filters?: { /*role?: UserRole; age?: number; company?: string */}): Observable<CtxPk[]> {
-    /*
+  getCtxPks(filters?: { $schema?: string; name?: string; enabled?: string }): Observable<CtxPk[]> {
+
     let httpParams: HttpParams = new HttpParams();
+
     if (filters) {
-      if (filters.role) {
-        httpParams = httpParams.set('role', filters.role);
+      if (filters.$schema) {
+        httpParams = httpParams.set('$schema', filters.$schema);
       }
-      if (filters.age) {
-        httpParams = httpParams.set('age', filters.age.toString());
+      if (filters.name) {
+        httpParams = httpParams.set('name', filters.name);
       }
-      if (filters.company) {
-        httpParams = httpParams.set('company', filters.company);
+      if (filters.enabled) {
+        httpParams = httpParams.set('enabled', filters.enabled);
       }
+      /* Wordpacks
+      if (filters.) {
+        httpParams = httpParams.set('enabled', filters.enabled);
+      }
+      */
     }
-    return this.httpClient.get<User[]>(this.userUrl, {
+    return this.httpClient.get<CtxPk[]>(this.ctxPkUrl, {
       params: httpParams,
     });
-    */
   }
   /*
   getUserById(id: string): Observable<User> {
