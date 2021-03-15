@@ -33,7 +33,7 @@
         <mat-card-content>
           <mat-nav-list class="context-pack-nav-list">
             <h3 mat-subheader>Context packs</h3>
-            <a mat-list-item *ngFor="let contextPack of this.filteredCtxPks" [routerLink]="['/context-packs', contextPack._id]" class="context-pack-list-item">
+            <a mat-list-item *ngFor="let contextPack of this.filteredCtxPks" [routerLink]="['/ctxPks', contextPack._id]" class="context-pack-list-item">
               <h3 matLine class="context-pack-list-name"> {{contextPack.name}} </h3>
               <p matLine class="context-pack-list-enabled"> {{contextPack.enabled}} </p>
             </a>

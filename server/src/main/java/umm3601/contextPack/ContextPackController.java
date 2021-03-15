@@ -42,7 +42,7 @@ public class ContextPackController {
    * @param database the database containing user data
    */
   public ContextPackController(MongoDatabase database) {
-    contextPackCollection = JacksonMongoCollection.builder().build(database, "contextPacks", ContextPack.class);
+    contextPackCollection = JacksonMongoCollection.builder().build(database, "ctxPks", ContextPack.class);
   }
 
   /**

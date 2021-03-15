@@ -46,8 +46,8 @@ export class CtxPkListComponent implements OnInit, OnDestroy  {
   }
 
   public updateFilter(): void {
-    this.filteredCtxPks = this.ctxPkService.filterContextPacks(
-      this.serverFilteredUsers, { name: this.userName, company: this.userCompany });
+    this.filteredCtxPks = this.ctxPkService.filterCtxPks(
+      this.serverFilteredCtxPks, { name: this.ctxPkName, enabled: this.ctxPkEnabled });
   }
 
 
@@ -56,7 +56,7 @@ export class CtxPkListComponent implements OnInit, OnDestroy  {
    *
    */
   ngOnInit(): void {
-    //this.getFromServer();
+    this.getCtxPksFromServer();
   }
 
   ngOnDestroy(): void {

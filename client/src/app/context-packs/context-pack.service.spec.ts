@@ -6,37 +6,31 @@ import { CtxPkService } from './context-pack.service';
 
 describe('Context pack service: ', () => {
   // A small collection of test users
-  /**
-  const testUsers: User[] = [
+
+  const testCtxPks: CtxPk[] = [
     {
-      _id: 'chris_id',
-      name: 'Chris',
-      age: 25,
-      company: 'UMM',
-      email: 'chris@this.that',
-      role: 'admin',
-      avatar: 'https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon'
+      _id: 'birthday_id',
+      name: 'Birthday Pack',
+      icon: 'birthday.png',
+      enabled: true
+      //wordpacks: ""
     },
     {
-      _id: 'pat_id',
-      name: 'Pat',
-      age: 37,
-      company: 'IBM',
-      email: 'pat@something.com',
-      role: 'editor',
-      avatar: 'https://gravatar.com/avatar/b42a11826c3bde672bce7e06ad729d44?d=identicon'
+      _id: 'farm_id',
+      name: 'farm',
+      icon: 'barn.jpg',
+      enabled: true
+      //wordpacks: ""
     },
     {
-      _id: 'jamie_id',
-      name: 'Jamie',
-      age: 37,
-      company: 'Frogs, Inc.',
-      email: 'jamie@frogs.com',
-      role: 'viewer',
-      avatar: 'https://gravatar.com/avatar/d4a6c71dd9470ad4cf58f78c100258bf?d=identicon'
+      _id: 'jojo_id',
+      name: 'Jojo Siwa',
+      icon: 'jojo.png',
+      enabled: false
+      //wordpacks: ""
     }
   ];
-  let userService: UserService;
+  let ctxPkService: CtxPkService;
   // These are used to mock the HTTP requests so that we (a) don't have to
   // have the server running and (b) we can check exactly which HTTP
   // requests were made to ensure that we're making the correct requests.
@@ -52,7 +46,7 @@ describe('Context pack service: ', () => {
     httpTestingController = TestBed.inject(HttpTestingController);
     // Construct an instance of the service with the mock
     // HTTP client.
-    userService = new UserService(httpClient);
+    ctxPkService = new CtxPkService(httpClient);
   });
 
   afterEach(() => {
@@ -60,125 +54,125 @@ describe('Context pack service: ', () => {
     httpTestingController.verify();
   });
 
-  it('getUsers() calls api/users', () => {
+  it('getCtxPks() calls api/ctxPks', () => {
     // Assert that the users we get from this call to getUsers()
     // should be our set of test users. Because we're subscribing
     // to the result of getUsers(), this won't actually get
     // checked until the mocked HTTP request 'returns' a response.
     // This happens when we call req.flush(testUsers) a few lines
     // down.
-    userService.getUsers().subscribe(
-      users => expect(users).toBe(testUsers)
+    ctxPkService.getCtxPks().subscribe(
+      ctxPks => expect(ctxPks).toBe(testCtxPks)
     );
 
     // Specify that (exactly) one request will be made to the specified URL.
-    const req = httpTestingController.expectOne(userService.userUrl);
+    const req = httpTestingController.expectOne(ctxPkService.ctxPkUrl);
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
     // Specify the content of the response to that request. This
     // triggers the subscribe above, which leads to that check
     // actually being performed.
-    req.flush(testUsers);
+    req.flush(testCtxPks);
   });
 
-  it('getUsers() calls api/users with filter parameter \'admin\'', () => {
+  it('getCtxPks() calls api/ctxPks with filter parameter \'name\'', () => {
 
-    userService.getUsers({ role: 'admin' }).subscribe(
-      users => expect(users).toBe(testUsers)
+    ctxPkService.getCtxPks({ name: 'birthday' }).subscribe(
+      ctxPks => expect(ctxPks).toBe(testCtxPks)
     );
 
     // Specify that (exactly) one request will be made to the specified URL with the role parameter.
     const req = httpTestingController.expectOne(
-      (request) => request.url.startsWith(userService.userUrl) && request.params.has('role')
+      (request) => request.url.startsWith(ctxPkService.ctxPkUrl) && request.params.has('name')
     );
 
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
 
     // Check that the role parameter was 'admin'
-    expect(req.request.params.get('role')).toEqual('admin');
+    expect(req.request.params.get('name')).toEqual('birthday');
 
-    req.flush(testUsers);
+    req.flush(testCtxPks);
   });
 
-  it('getUsers() calls api/users with filter parameter \'age\'', () => {
+  it('getCtxPks() calls api/ctxPks with filter parameter \'enabled\'', () => {
 
-    userService.getUsers({ age: 25 }).subscribe(
-      users => expect(users).toBe(testUsers)
+    ctxPkService.getCtxPks({ enabled: true }).subscribe(
+      ctxPks => expect(ctxPks).toBe(testCtxPks)
     );
 
     // Specify that (exactly) one request will be made to the specified URL with the role parameter.
     const req = httpTestingController.expectOne(
-      (request) => request.url.startsWith(userService.userUrl) && request.params.has('age')
+      (request) => request.url.startsWith(ctxPkService.ctxPkUrl) && request.params.has('enabled')
     );
 
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
 
     // Check that the role parameter was 'admin'
-    expect(req.request.params.get('age')).toEqual('25');
+    expect(req.request.params.get('enabled')).toEqual('true');
 
-    req.flush(testUsers);
+    req.flush(testCtxPks);
   });
 
   it('getUsers() calls api/users with multiple filter parameters', () => {
 
-    userService.getUsers({ role: 'editor', company: 'IBM', age: 37 }).subscribe(
-      users => expect(users).toBe(testUsers)
+    ctxPkService.getCtxPks({ name: 'birthday', enabled: true }).subscribe(
+      ctxPks => expect(ctxPks).toBe(testCtxPks)
     );
 
     // Specify that (exactly) one request will be made to the specified URL with the role parameter.
     const req = httpTestingController.expectOne(
-      (request) => request.url.startsWith(userService.userUrl)
-        && request.params.has('role') && request.params.has('company') && request.params.has('age')
+      (request) => request.url.startsWith(ctxPkService.ctxPkUrl)
+        && request.params.has('name') && request.params.has('enabled')
     );
 
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
 
     // Check that the role parameters are correct
-    expect(req.request.params.get('role')).toEqual('editor');
-    expect(req.request.params.get('company')).toEqual('IBM');
-    expect(req.request.params.get('age')).toEqual('37');
+    expect(req.request.params.get('name')).toEqual('birthday');
+    expect(req.request.params.get('enabled')).toEqual('true');
 
-    req.flush(testUsers);
+    req.flush(testCtxPks);
   });
 
-  it('getUserById() calls api/users/id', () => {
-    const targetUser: User = testUsers[1];
-    const targetId: string = targetUser._id;
-    userService.getUserById(targetId).subscribe(
-      user => expect(user).toBe(targetUser)
+  it('getCtxPkById() calls api/ctxPks/id', () => {
+    const targetCtxPk: CtxPk = testCtxPks[1];
+    const targetId: string = targetCtxPk._id;
+    ctxPkService.getCtxPkById(targetId).subscribe(
+      ctxPk => expect(ctxPk).toBe(targetCtxPk)
     );
 
-    const expectedUrl: string = userService.userUrl + '/' + targetId;
+    const expectedUrl: string = ctxPkService.ctxPkUrl + '/' + targetId;
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toEqual('GET');
-    req.flush(targetUser);
+    req.flush(targetCtxPk);
   });
 
-  it('filterUsers() filters by name', () => {
-    expect(testUsers.length).toBe(3);
-    const userName = 'a';
-    expect(userService.filterUsers(testUsers, { name: userName }).length).toBe(2);
+  it('filterCtxPks() filters by name', () => {
+    expect(testCtxPks.length).toBe(3);
+    const ctxPkName = 'a';
+    expect(ctxPkService.filterCtxPks(testCtxPks, { name: ctxPkName }).length).toBe(2);
   });
 
-  it('filterUsers() filters by company', () => {
-    expect(testUsers.length).toBe(3);
-    const userCompany = 'UMM';
-    expect(userService.filterUsers(testUsers, { company: userCompany }).length).toBe(1);
+  it('filterCtxPks() filters by enabled', () => {
+    expect(testCtxPks.length).toBe(3);
+    const ctxPkEnabled = false;
+    expect(ctxPkService.filterCtxPks(testCtxPks, { enabled: ctxPkEnabled }).length).toBe(1);
   });
 
-  it('filterUsers() filters by name and company', () => {
-    expect(testUsers.length).toBe(3);
-    const userCompany = 'UMM';
-    const userName = 'chris';
-    expect(userService.filterUsers(testUsers, { name: userName, company: userCompany }).length).toBe(1);
+  it('filterCtxPks() filters by name and enabled', () => {
+    expect(testCtxPks.length).toBe(3);
+    const ctxPkName = 'Jojo';
+    const ctxPkEnabled = false;
+    expect(ctxPkService.filterCtxPks(testCtxPks, { name: ctxPkName, enabled: ctxPkEnabled }).length).toBe(1);
   });
 
-  it('addUser() posts to api/users', () => {
+  /*
+  it('addcTXpK() posts to api/context-packs', () => {
 
-    userService.addUser(testUsers[1]).subscribe(
+    ctxPkService.addCtxPk(testCtxPks[1]).subscribe(
       id => expect(id).toBe('testid')
     );
 

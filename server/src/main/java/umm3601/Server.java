@@ -61,10 +61,11 @@ public class Server {
 
     // List users, filtered using query parameters
     server.get("/api/users", userController::getUsers);
-    server.get("/api/contextPacks", contextPackController::getContextPacks);
+    server.get("/api/ctxPks", contextPackController::getContextPacks);
 
     // Get the specified user
     server.get("/api/users/:id", userController::getUser);
+    server,get("/api/ctxPks/:id", contextPackController::getContextPack);
 
     // Delete the specified user
     server.delete("/api/users/:id", userController::deleteUser);

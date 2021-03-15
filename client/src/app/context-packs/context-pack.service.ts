@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class CtxPkService {
-  readonly ctxPkUrl: string = environment.apiUrl + 'context-packs';
+  readonly ctxPkUrl: string = environment.apiUrl + 'ctxPks';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -22,7 +22,7 @@ export class CtxPkService {
         httpParams = httpParams.set('name', filters.name);
       }
       if (filters.enabled) {
-        httpParams = httpParams.set('enabled', filters.enabled);
+        httpParams = httpParams.set('enabled', filters.enabled.toString());
       }
       /* Wordpacks
       if (filters.) {
@@ -35,7 +35,7 @@ export class CtxPkService {
     });
   }
 
-  getCtxPksById(id: string): Observable<CtxPk> {
+  getCtxPkById(id: string): Observable<CtxPk> {
     return this.httpClient.get<CtxPk>(this.ctxPkUrl + '/' + id);
   }
 
@@ -52,17 +52,15 @@ export class CtxPkService {
 
     // Filter by company
     if (filters.enabled) {
-      filters.company = filters.company.toLowerCase();
-
-      filteredUsers = filteredUsers.filter(user => user.company.toLowerCase().indexOf(filters.company) !== -1);
+      filteredCtxPks = filteredCtxPks.filter(ctxPk => ctxPk.enabled.toString().indexOf(filters.enabled.toString()) !== -1);
     }
 
-    return filteredUsers;
+    return filteredCtxPks;
   }
-
+/*
   addUser(newUser: User): Observable<string> {
     // Send post request to add a new user with the user data as the body.
     return this.httpClient.post<{id: string}>(this.userUrl, newUser).pipe(map(res => res.id));
   }
-
+*/
 }
