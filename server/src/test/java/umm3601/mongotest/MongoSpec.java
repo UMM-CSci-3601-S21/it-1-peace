@@ -40,6 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MongoSpec {
 
   private MongoCollection<Document> userDocuments;
+  private MongoCollection<Document> ctxPkDocuments;
 
   static MongoClient mongoClient;
   static MongoDatabase db;
@@ -67,6 +68,9 @@ public class MongoSpec {
   public void clearAndPopulateDB() {
     userDocuments = db.getCollection("users");
     userDocuments.drop();
+    ctxPkDocuments = db.getCollection("ctxPks");
+    ctxPkDocuments.drop();
+
     List<Document> testUsers = new ArrayList<>();
     testUsers.add(
       new Document()
@@ -88,6 +92,31 @@ public class MongoSpec {
         .append("email", "jamie@frogs.com"));
 
     userDocuments.insertMany(testUsers);
+
+    List<Document> testCtxPks = new ArrayList<>();
+    testCtxPks.add(
+      new Document()
+        .append("name", "Birthday Pack")
+        .append("icon", "birthday.png")
+        .append("enabled", true)
+        //.append("wordlists", ...)
+        );
+    testCtxPks.add(
+      new Document()
+        .append("name", "farm")
+        .append("icon", "barn.png")
+        .append("enabled", true)
+        //.append("wordlists", ...)
+        );
+    testCtxPks.add(
+      new Document()
+        .append("name", "sight words")
+        .append("icon", "eye.png")
+        .append("enabled", true)
+        //.append("wordlists", ...)
+        );
+
+    ctxPkDocuments.insertMany(testCtxPks);
   }
 
   private List<Document> intoList(MongoIterable<Document> documents) {
@@ -99,6 +128,17 @@ public class MongoSpec {
   private int countUsers(FindIterable<Document> documents) {
     List<Document> users = intoList(documents);
     return users.size();
+  }
+
+  private List<Document> ctxIntoList(MongoIterable<Document> documents) {
+    List<Document> ctxPks = new ArrayList<>();
+    documents.into(ctxPks);
+    return ctxPks;
+  }
+
+  private int countCtxPks(FindIterable<Document> documents) {
+    List<Document> ctxPks = ctxIntoList(documents);
+    return ctxPks.size();
   }
 
   @Test
@@ -120,6 +160,135 @@ public class MongoSpec {
     FindIterable<Document> documents = userDocuments.find(gt("age", 25));
     int numberOfUsers = countUsers(documents);
     assertEquals(2, numberOfUsers, "Should be 2 over 25");
+  }
+
+  @Test
+  public void over25SortedByName() {
+    FindIterable<Document> documents
+      = userDocuments.find(gt("age", 25))
+      .sort(Sorts.ascending("name"));
+    List<Document> docs = intoList(documents);
+    assertEquals(2, docs.size(), "Should be 2");
+    assertEquals("Jamie", docs.get(0).get("name"), "First should be Jamie");
+    assertEquals("Pat", docs.get(1).get("name"), "Second should be Pat");
+  }
+
+  @Test
+  public void over25AndIbmers() {
+    FindIterable<Document> documents
+      = userDocuments.find(and(gt("age", 25),
+      eq("company", "IBM")));
+    List<Document> docs = intoList(documents);
+    assertEquals(1, docs.size(), "Should be 1");
+    assertEquals("Pat", docs.get(0).get("name"), "First should be Pat");
+  }
+
+  @Test
+  public void justNameAndEmail() {
+    FindIterable<Document> documents
+      = userDocuments.find().projection(fields(include("name", "email")));
+    List<Document> docs = intoList(documents);
+    assertEquals(3, docs.size(), "Should be 3");
+    assertEquals("Chris", docs.get(0).get("name"), "First should be Chris");
+    assertNotNull(docs.get(0).get("email"), "First should have email");
+    assertNull(docs.get(0).get("company"), "First shouldn't have 'company'");
+    assertNotNull(docs.get(0).get("_id"), "First should have '_id'");
+  }
+
+  @Test
+  public void justNameAndEmailNoId() {
+    FindIterable<Document> documents
+      = userDocuments.find()
+      .projection(fields(include("name", "email"), excludeId()));
+    List<Document> docs = intoList(documents);
+    assertEquals(3, docs.size(), "Should be 3");
+    assertEquals("Chris", docs.get(0).get("name"), "First should be Chris");
+    assertNotNull(docs.get(0).get("email"), "First should have email");
+    assertNull(docs.get(0).get("company"), "First shouldn't have 'company'");
+    assertNull(docs.get(0).get("_id"), "First should not have '_id'");
+  }
+
+  @Test
+  public void justNameAndEmailNoIdSortedByCompany() {
+    FindIterable<Document> documents
+      = userDocuments.find()
+      .sort(Sorts.ascending("company"))
+      .projection(fields(include("name", "email"), excludeId()));
+    List<Document> docs = intoList(documents);
+    assertEquals(3, docs.size(), "Should be 3");
+    assertEquals("Jamie", docs.get(0).get("name"), "First should be Jamie");
+    assertNotNull(docs.get(0).get("email"), "First should have email");
+    assertNull(docs.get(0).get("company"), "First shouldn't have 'company'");
+    assertNull(docs.get(0).get("_id"), "First should not have '_id'");
+  }
+
+  @Test
+  public void ageCounts() {
+    AggregateIterable<Document> documents
+      = userDocuments.aggregate(
+      Arrays.asList(
+        /*
+         * Groups data by the "age" field, and then counts
+         * the number of documents with each given age.
+         * This creates a new "constructed document" that
+         * has "age" as it's "_id", and the count as the
+         * "ageCount" field.
+         */
+        Aggregates.group("$age",
+          Accumulators.sum("ageCount", 1)),
+        Aggregates.sort(Sorts.ascending("_id"))
+      )
+    );
+    List<Document> docs = intoList(documents);
+    assertEquals(2, docs.size(), "Should be two distinct ages");
+    assertEquals(docs.get(0).get("_id"), 25);
+    assertEquals(docs.get(0).get("ageCount"), 1);
+    assertEquals(docs.get(1).get("_id"), 37);
+    assertEquals(docs.get(1).get("ageCount"), 2);
+  }
+
+  @Test
+  public void averageAge() {
+    AggregateIterable<Document> documents
+      = userDocuments.aggregate(
+      Arrays.asList(
+        Aggregates.group("$company",
+          Accumulators.avg("averageAge", "$age")),
+        Aggregates.sort(Sorts.ascending("_id"))
+      ));
+    List<Document> docs = intoList(documents);
+    assertEquals(3, docs.size(), "Should be three companies");
+
+    assertEquals("Frogs, Inc.", docs.get(0).get("_id"));
+    assertEquals(37.0, docs.get(0).get("averageAge"));
+    assertEquals("IBM", docs.get(1).get("_id"));
+    assertEquals(37.0, docs.get(1).get("averageAge"));
+    assertEquals("UMM", docs.get(2).get("_id"));
+    assertEquals(25.0, docs.get(2).get("averageAge"));
+  }
+
+
+
+
+  @Test
+  public void shouldBeThreeCtxPks() {
+    FindIterable<Document> documents = ctxPkDocuments.find();
+    int numberOfCtxPks = countCtxPks(documents);
+    assertEquals(3, numberOfCtxPks, "Should be 3 total context packs");
+  }
+
+  @Test
+  public void shouldBeOneBirthday() {
+    FindIterable<Document> documents = ctxPkDocuments.find(eq("name", "Birthday Pack"));
+    int numberOfCtxPks = countCtxPks(documents);
+    assertEquals(1, numberOfCtxPks, "Should be 1 Birthday Pack");
+  }
+
+  @Test
+  public void shouldBeThreeTrue() {
+    FindIterable<Document> documents = ctxPkDocuments.find(eq("enabled", true));
+    int numberOfCtxPks = countCtxPks(documents);
+    assertEquals(3, numberOfCtxPks, "Should be 3 enabled");
   }
 
   @Test
