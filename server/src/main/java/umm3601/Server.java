@@ -62,11 +62,20 @@ public class Server {
     // List users, filtered using query parameters
     server.get("/api/users", userController::getUsers);
 
+    // List wordlists, filtered using query parameters
+    server.get("/api/wordlists", wordListController::getWordLists);
+
     // Get the specified user
     server.get("/api/users/:id", userController::getUser);
 
+    // Get a specified wordlist
+    server.get("/api/wordlists/:id", wordListController::getWordList);
+
     // Delete the specified user
     server.delete("/api/users/:id", userController::deleteUser);
+
+    // Delete the specified wordlist
+    server.get("/api/wordlists/:id", wordListController::deleteWordList);
 
     // Add new user with the user info being in the JSON body
     // of the HTTP request
@@ -76,5 +85,9 @@ public class Server {
       ctx.status(500);
       ctx.json(e); // you probably want to remove this in production
     });
+
+    // Add new wordlist
+    server.post("/api/wordlists", wordListController::addNewWordList);
+
   }
 }

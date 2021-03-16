@@ -35,6 +35,7 @@ import { AddUserComponent } from './users/add-user.component';
 
 import { ContextPackService } from './context-packs/context-pack.service';
 import { WordListService } from './word-lists/word-list.service';
+import { AddWordListComponent } from './add-word-list/add-word-list.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -63,6 +64,7 @@ const MATERIAL_MODULES: any[] = [
     UserCardComponent,
     UserProfileComponent,
     AddUserComponent,
+    AddWordListComponent,
   ],
   imports: [
     BrowserModule,

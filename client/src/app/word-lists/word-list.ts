@@ -1,4 +1,4 @@
-import { Word } from "./word";
+import { Word } from './word';
 
 export interface WordList {
   _id: string;

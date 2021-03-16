@@ -12,7 +12,7 @@ export class WordListService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getWordLists(filters?: { enabled?: boolean; name?: string; }): Observable<WordList[]> {
+  getWordLists(filters?: { enabled?: boolean; name?: string}): Observable<WordList[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.enabled) {
@@ -31,18 +31,19 @@ export class WordListService {
     return this.httpClient.get<WordList>(this.wordListUrl + '/' + id);
   }
 
-  filterWordLists(wordLists: WordList[], filters: { enabled?: boolean; name?: string; }): WordList[] {
+  filterWordLists(wordLists: WordList[], filters: { enabled?: boolean; name?: string}): WordList[] {
 
     let filteredWordLists = wordLists;
 
     // Filter by enabled or disabled
     if (filters.enabled) {
-      filteredWordLists = filteredWordLists.filter(wordLists => wordLists.enabled == filters.enabled);
+      filteredWordLists = filteredWordLists.filter(wordList => wordList.enabled === filters.enabled);
     }
 
+    // Filter by name
     if (filters.name) {
       filters.name = filters.name.toLowerCase();
-      filteredWordLists = filteredWordLists.filter(wordLists => wordLists.name == filters.name);
+      filteredWordLists = filteredWordLists.filter(wordList => wordList.name === filters.name);
     }
 
     return filteredWordLists;
