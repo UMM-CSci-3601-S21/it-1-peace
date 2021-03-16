@@ -1,4 +1,4 @@
-import { WordList } from "../word-lists/word-list";
+import { WordList } from '../word-lists/word-list';
 
 export interface ContextPack {
   _id: string;
