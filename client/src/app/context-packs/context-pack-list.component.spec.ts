@@ -59,27 +59,27 @@ describe('Context pack list', () => {
     });
   }));
 
-  /*
-  it('contains all the users', () => {
-    expect(userList.serverFilteredUsers.length).toBe(3);
+
+  it('contains all the context packs', () => {
+    expect(ctxPkList.serverFilteredCtxPks.length).toBe(3);
   });
 
-  it('contains a user named \'Chris\'', () => {
-    expect(userList.serverFilteredUsers.some((user: User) => user.name === 'Chris')).toBe(true);
+  it('contains a context pack named \'Birthday Pack\'', () => {
+    expect(ctxPkList.serverFilteredCtxPks.some((ctxPk: CtxPk) => ctxPk.name === 'Birthday Pack')).toBe(true);
   });
 
-  it('contain a user named \'Jamie\'', () => {
-    expect(userList.serverFilteredUsers.some((user: User) => user.name === 'Jamie')).toBe(true);
+  it('contain a context pack named \'farm\'', () => {
+    expect(ctxPkList.serverFilteredCtxPks.some((ctxPk: CtxPk) => ctxPk.name === 'farm')).toBe(true);
   });
 
-  it('doesn\'t contain a user named \'Santa\'', () => {
-    expect(userList.serverFilteredUsers.some((user: User) => user.name === 'Santa')).toBe(false);
+  it('doesn\'t contain a context pack named \'Santa\'', () => {
+    expect(ctxPkList.serverFilteredCtxPks.some((ctxPk: CtxPk) => ctxPk.name === 'Santa')).toBe(false);
   });
 
-  it('has two users that are 37 years old', () => {
-    expect(userList.serverFilteredUsers.filter((user: User) => user.age === 37).length).toBe(2);
+  it('has two context packs that are enabled', () => {
+    expect(ctxPkList.serverFilteredCtxPks.filter((ctxPk: CtxPk) => ctxPk.enabled === true).length).toBe(2);
   });
-  */
+
 });
 
 describe('Misbehaving CtxPk List', () => {
@@ -121,6 +121,6 @@ describe('Misbehaving CtxPk List', () => {
 
   it('generates an error if we don\'t set up a CtxPkListService', () => {
     // Since the observer throws an error, we don't expect users to be defined.
-    //expect(ctxPkList.serverFilteredCtxPks).toBeUndefined();
+    expect(ctxPkList.serverFilteredCtxPks).toBeUndefined();
   });
 });

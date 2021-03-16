@@ -115,7 +115,7 @@ describe('Context pack service: ', () => {
     req.flush(testCtxPks);
   });
 
-  it('getUsers() calls api/users with multiple filter parameters', () => {
+  it('getCtxPks() calls api/ctxPks with multiple filter parameters', () => {
 
     ctxPkService.getCtxPks({ name: 'birthday', enabled: true }).subscribe(
       ctxPks => expect(ctxPks).toBe(testCtxPks)
