@@ -109,9 +109,10 @@ public class ContextPackControllerSpec {
       new Document()
         .append("_id", jojoId)
         .append("name", "Jojo Siwa")
-        .append("age", 45)
-        .append("company", "OHMNET")
-        .append("email", "sam@frogs.com");
+        .append("icon", "jojo.png")
+        .append("enabled", true);
+        // .append("wordlists", ...)
+
 
     ctxPkDocuments.insertMany(testCtxPks);
     ctxPkDocuments.insertOne(jojo);
@@ -139,134 +140,134 @@ public class ContextPackControllerSpec {
     assertEquals(db.getCollection("ctxPks").countDocuments(), JavalinJson.fromJson(result, ContextPack[].class).length);
   }
 
-  /*
+
   @Test
-  public void GetUsersByAge() throws IOException {
+  public void GetCtxPksByName() throws IOException {
 
     // Set the query string to test with
-    mockReq.setQueryString("age=37");
+    mockReq.setQueryString("name=farm");
 
     // Create our fake Javalin context
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks");
 
-    userController.getUsers(ctx);
+    ctxPkController.getContextPacks(ctx);
 
     assertEquals(200, mockRes.getStatus()); // The response status should be 200
 
     String result = ctx.resultString();
-    User[] resultUsers = JavalinJson.fromJson(result, User[].class);
+    ContextPack[] resultCtxPks = JavalinJson.fromJson(result, ContextPack[].class);
 
-    assertEquals(2, resultUsers.length); // There should be two users returned
-    for (User user : resultUsers) {
-      assertEquals(37, user.age); // Every user should be age 37
+    assertEquals(1, resultCtxPks.length); // There should be two users returned
+    for (ContextPack ctxPk : resultCtxPks) {
+      assertEquals("farm", ctxPk.name); // Every user should be age 37
     }
   }
 
-  /**
-  * Test that if the user sends a request with an illegal value in
+
+  /* Test that if the user sends a request with an illegal value in
   * the age field (i.e., something that can't be parsed to a number)
   * we get a reasonable error code back.
-  *
+  */
   @Test
-  public void GetUsersWithIllegalAge() {
+  public void GetCtxPksWithIllegalEnabled() {
 
-    mockReq.setQueryString("age=abc");
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users");
+    mockReq.setQueryString("enabled=abc");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks");
 
     // This should now throw a `BadRequestResponse` exception because
     // our request has an age that can't be parsed to a number.
     assertThrows(BadRequestResponse.class, () -> {
-      userController.getUsers(ctx);
+      ctxPkController.getContextPacks(ctx);
     });
   }
 
   @Test
-  public void GetUsersByCompany() throws IOException {
+  public void GetCtxPksByIcon() throws IOException {
 
-    mockReq.setQueryString("company=OHMNET");
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users");
-    userController.getUsers(ctx);
+    mockReq.setQueryString("icon=birthday.png");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks");
+    ctxPkController.getContextPacks(ctx);
 
     assertEquals(200, mockRes.getStatus());
     String result = ctx.resultString();
 
-    User[] resultUsers = JavalinJson.fromJson(result, User[].class);
+    ContextPack[] resultCtxPks = JavalinJson.fromJson(result, ContextPack[].class);
 
-    assertEquals(2, resultUsers.length); // There should be two users returned
-    for (User user : resultUsers) {
-      assertEquals("OHMNET", user.company);
+    assertEquals(1, resultCtxPks.length); // There should be two users returned
+    for (ContextPack ctxPk : resultCtxPks) {
+      assertEquals("birthday.png", ctxPk.icon);
     }
   }
 
   @Test
-  public void GetUsersByRole() throws IOException {
+  public void GetCtxPksByEnabled() throws IOException {
 
-    mockReq.setQueryString("role=viewer");
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users");
-    userController.getUsers(ctx);
+    mockReq.setQueryString("enabled=true");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks");
+    ctxPkController.getContextPacks(ctx);
 
     assertEquals(200, mockRes.getStatus());
     String result = ctx.resultString();
-    for (User user : JavalinJson.fromJson(result, User[].class)) {
-      assertEquals("viewer", user.role);
+    for (ContextPack ctxPk : JavalinJson.fromJson(result, ContextPack[].class)) {
+      assertEquals(true, ctxPk.enabled);
     }
   }
 
   @Test
-  public void GetUsersByCompanyAndAge() throws IOException {
+  public void GetCtxPksByNameAndEnabled() throws IOException {
 
-    mockReq.setQueryString("company=OHMNET&age=37");
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users");
-    userController.getUsers(ctx);
+    mockReq.setQueryString("name=farm&enabled=true");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks");
+    ctxPkController.getContextPacks(ctx);
 
     assertEquals(200, mockRes.getStatus());
     String result = ctx.resultString();
-    User[] resultUsers = JavalinJson.fromJson(result, User[].class);
+    ContextPack[] resultCtxPks = JavalinJson.fromJson(result, ContextPack[].class);
 
-    assertEquals(1, resultUsers.length); // There should be one user returned
-    for (User user : resultUsers) {
-      assertEquals("OHMNET", user.company);
-      assertEquals(37, user.age);
+    assertEquals(1, resultCtxPks.length); // There should be one user returned
+    for (ContextPack ctxPk : resultCtxPks) {
+      assertEquals("farm", ctxPk.name);
+      assertEquals(true, ctxPk.enabled);
     }
   }
 
   @Test
-  public void GetUserWithExistentId() throws IOException {
+  public void GetCtxPkWithExistentId() throws IOException {
 
-    String testID = samsId.toHexString();
+    String testID = jojoId.toHexString();
 
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users/:id", ImmutableMap.of("id", testID));
-    userController.getUser(ctx);
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks/:id", ImmutableMap.of("id", testID));
+    ctxPkController.getContextPacks(ctx);
 
     assertEquals(200, mockRes.getStatus());
 
     String result = ctx.resultString();
-    User resultUser = JavalinJson.fromJson(result, User.class);
+    ContextPack resultCtxPk = JavalinJson.fromJson(result, ContextPack.class);
 
-    assertEquals(resultUser._id, samsId.toHexString());
-    assertEquals(resultUser.name, "Sam");
+    assertEquals(resultCtxPk._id, jojoId.toHexString());
+    assertEquals(resultCtxPk.name, "Jojo Siwa");
   }
 
   @Test
-  public void GetUserWithBadId() throws IOException {
+  public void GetCtxPkWithBadId() throws IOException {
 
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users/:id", ImmutableMap.of("id", "bad"));
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks/:id", ImmutableMap.of("id", "bad"));
 
     assertThrows(BadRequestResponse.class, () -> {
-      userController.getUser(ctx);
+      ctxPkController.getContextPack(ctx);
     });
   }
 
   @Test
-  public void GetUserWithNonexistentId() throws IOException {
+  public void GetCtxPkWithNonexistentId() throws IOException {
 
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users/:id", ImmutableMap.of("id", "58af3a600343927e48e87335"));
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks/:id", ImmutableMap.of("id", "58af3a600343927e48e87335"));
 
     assertThrows(NotFoundResponse.class, () -> {
-      userController.getUser(ctx);
+      ctxPkController.getContextPack(ctx);
     });
   }
-
+/*
   @Test
   public void AddUser() throws IOException {
 

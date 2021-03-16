@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'users/new', component: AddUserComponent},
   {path: 'users/:id', component: UserProfileComponent},
   {path: 'context-packs', component: CtxPkListComponent},
-  //{path: 'context-packs/:id', component: CtxPkListComponent}
+  {path: 'context-packs/:id', component: CtxPkListComponent}
 ];
 
 @NgModule({

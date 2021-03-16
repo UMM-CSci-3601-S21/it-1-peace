@@ -66,6 +66,7 @@ public class ContextPackController {
     }
   }
 
+
   /**
    * Delete the user specified by the `id` parameter in the request.
    *
@@ -97,7 +98,8 @@ public class ContextPackController {
     }
 
     if (ctx.queryParamMap().containsKey(ENABLED_KEY)) {
-      filters.add(eq(ENABLED_KEY, ctx.queryParam(ENABLED_KEY)));
+      boolean targetEnabled = ctx.queryParam(ENABLED_KEY, Boolean.class).get();
+      filters.add(eq(ENABLED_KEY, targetEnabled));
     }
 
     String sortBy = ctx.queryParam("sortby", "name"); //Sort by sort query param, default is name
