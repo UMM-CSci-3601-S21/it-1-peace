@@ -17,6 +17,7 @@ export class WordListComponent implements OnInit, OnDestroy  {
 
   public wordListName: string;
   public wordListEnabled: boolean;
+  public viewType: 'card' | 'list' = 'card';
   getWordListsSub: Subscription;
 
 

@@ -14,25 +14,17 @@
             [(ngModel)]="wordListName" (input)="updateFilter()">
             <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
-
-          <mat-form-field class="input-field">
-            <mat-label>Company</mat-label>
-            <input matInput data-test="wordListCompanyInput" placeholder="Filter by enabled status"
-            [(ngModel)]="wordListCompany" (input)="updateFilter()">
-            <mat-hint>Filtered on client</mat-hint>
-          </mat-form-field>
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="10px">
           <!-- Examples of filtering on the server -->
 
           <mat-form-field class="input-field">
-            <mat-label>Role</mat-label>
-            <mat-select (selectionChange)="getWordListsFromServer()" [(ngModel)]="wordListRole" data-test="wordListRoleSelect">
+            <mat-label>Enabled</mat-label>
+            <mat-select (selectionChange)="getWordListsFromServer()" [(ngModel)]="wordListEnabled" data-test="wordListEnabledSelect">
               <mat-option>--</mat-option>
-              <mat-option value="admin">Admin</mat-option>
-              <mat-option value="editor">Editor</mat-option>
-              <mat-option value="viewer">Viewer</mat-option>
+              <mat-option value="true">Enabled</mat-option>
+              <mat-option value="false">Disabled</mat-option>
             </mat-select>
             <mat-hint>Filtered on server</mat-hint>
           </mat-form-field>
@@ -58,9 +50,7 @@
     <div [ngSwitch]="viewType">
 
       <!-- Card grid view -->
-      <div *ngSwitchCase="'card'" fxLayout="row wrap" fxLayoutGap="10px" class="wordList-cards-container">
-        <app-wordList-card simple="true" *ngFor="let wordList of filteredWordLists" class="wordList-card" [wordList]="wordList" fxFlex="1 1 280px"></app-wordList-card>
-      </div>
+
 
       <!-- List view -->
       <mat-card *ngSwitchCase="'list'">
@@ -68,9 +58,8 @@
           <mat-nav-list class="wordList-nav-list">
             <h3 mat-subheader>WordLists</h3>
             <a mat-list-item *ngFor="let wordList of this.filteredWordLists" [routerLink]="['/wordLists', wordList._id]" class="wordList-list-item">
-              <img matListAvatar [src]="wordList.avatar" *ngIf="this.wordList.avatar">
               <h3 matLine class="wordList-list-name"> {{wordList.name}} </h3>
-              <p matLine class="wordList-list-role"> {{wordList.role}} </p>
+              <p matLine class="wordList-list-enabled"> {{wordList.enabled}} </p>
             </a>
           </mat-nav-list>
         </mat-card-content>
