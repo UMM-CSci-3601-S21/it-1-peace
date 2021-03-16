@@ -27,10 +27,6 @@ export class WordListService {
     });
   }
 
-  getWordListById(id: string): Observable<WordList> {
-    return this.httpClient.get<WordList>(this.wordListUrl + '/' + id);
-  }
-
   filterWordLists(wordLists: WordList[], filters: { enabled?: boolean; name?: string}): WordList[] {
 
     let filteredWordLists = wordLists;
