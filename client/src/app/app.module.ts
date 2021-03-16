@@ -35,6 +35,9 @@ import { AddUserComponent } from './users/add-user.component';
 
 import { CtxPkService } from './context-packs/context-pack.service';
 import { CtxPkListComponent } from './context-packs/context-pack-list.component';
+import { WordListService } from './word-lists/word-list.service';
+import { AddWordListComponent } from './add-word-list/add-word-list.component';
+import { WordListComponent } from './word-lists/word-list.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -64,6 +67,8 @@ const MATERIAL_MODULES: any[] = [
     UserProfileComponent,
     AddUserComponent,
     CtxPkListComponent,
+    WordListComponent,
+    AddWordListComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +84,7 @@ const MATERIAL_MODULES: any[] = [
   providers: [
     UserService,
     CtxPkService,
+    WordListService    
   ],
   bootstrap: [AppComponent]
 })
