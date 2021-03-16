@@ -48,7 +48,7 @@ public class ContextPackControllerSpec {
   MockHttpServletRequest mockReq = new MockHttpServletRequest();
   MockHttpServletResponse mockRes = new MockHttpServletResponse();
 
-  private ContextPackController contextPackController;
+  private ContextPackController ctxPkController;
 
   private ObjectId jojoId;
 
@@ -84,45 +84,39 @@ public class ContextPackControllerSpec {
     List<Document> testCtxPks = new ArrayList<>();
     testCtxPks.add(
       new Document()
-        .append("name", "Chris")
-        .append("age", 25)
-        .append("company", "UMM")
-        .append("email", "chris@this.that")
-        .append("role", "admin")
-        .append("avatar", "https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon"));
+        .append("name", "Birthday Pack")
+        .append("icon", "birthday.png")
+        .append("enabled", true)
+        // .append("wordlists", ...)
+        );
     testCtxPks.add(
       new Document()
-        .append("name", "Pat")
-        .append("age", 37)
-        .append("company", "IBM")
-        .append("email", "pat@something.com")
-        .append("role", "editor")
-        .append("avatar", "https://gravatar.com/avatar/b42a11826c3bde672bce7e06ad729d44?d=identicon"));
+        .append("name", "farm")
+        .append("icon", "barn.png")
+        .append("enabled", true)
+        // .append("wordlists", ...)
+        );
     testCtxPks.add(
       new Document()
-        .append("name", "Jamie")
-        .append("age", 37)
-        .append("company", "OHMNET")
-        .append("email", "jamie@frogs.com")
-        .append("role", "viewer")
-        .append("avatar", "https://gravatar.com/avatar/d4a6c71dd9470ad4cf58f78c100258bf?d=identicon"));
+        .append("name", "sight words")
+        .append("icon", "eye.png")
+        .append("enabled", false)
+        // .append("wordlists", ...)
+        );
 
     jojoId = new ObjectId();
-    Document sam =
+    Document jojo =
       new Document()
-        .append("_id", samsId)
-        .append("name", "Sam")
+        .append("_id", jojoId)
+        .append("name", "Jojo Siwa")
         .append("age", 45)
         .append("company", "OHMNET")
-        .append("email", "sam@frogs.com")
-        .append("role", "viewer")
-        .append("avatar", "https://gravatar.com/avatar/08b7610b558a4cbbd20ae99072801f4d?d=identicon");
+        .append("email", "sam@frogs.com");
 
+    ctxPkDocuments.insertMany(testCtxPks);
+    ctxPkDocuments.insertOne(jojo);
 
-    userDocuments.insertMany(testUsers);
-    userDocuments.insertOne(sam);
-
-    userController = new UserController(db);
+    ctxPkController = new ContextPackController(db);
   }
 
   @AfterAll
@@ -132,19 +126,20 @@ public class ContextPackControllerSpec {
   }
 
   @Test
-  public void GetAllUsers() throws IOException {
+  public void GetAllCtxPks() throws IOException {
 
     // Create our fake Javalin context
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/users");
-    userController.getUsers(ctx);
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/ctxPks");
+    ctxPkController.getContextPacks(ctx);
 
 
     assertEquals(200, mockRes.getStatus());
 
     String result = ctx.resultString();
-    assertEquals(db.getCollection("users").countDocuments(), JavalinJson.fromJson(result, User[].class).length);
+    assertEquals(db.getCollection("ctxPks").countDocuments(), JavalinJson.fromJson(result, ContextPack[].class).length);
   }
 
+  /*
   @Test
   public void GetUsersByAge() throws IOException {
 
@@ -171,7 +166,7 @@ public class ContextPackControllerSpec {
   * Test that if the user sends a request with an illegal value in
   * the age field (i.e., something that can't be parsed to a number)
   * we get a reasonable error code back.
-  */
+  *
   @Test
   public void GetUsersWithIllegalAge() {
 
@@ -466,5 +461,5 @@ public class ContextPackControllerSpec {
     // User is no longer in the database
     assertEquals(0, db.getCollection("users").countDocuments(eq("_id", new ObjectId(testID))));
   }
-
+*/
 }

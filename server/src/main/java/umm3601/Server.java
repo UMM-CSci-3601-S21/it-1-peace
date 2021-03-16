@@ -65,7 +65,7 @@ public class Server {
 
     // Get the specified user
     server.get("/api/users/:id", userController::getUser);
-    //server.get("/api/ctxPks/:id", contextPackController::getContextPack);
+    server.get("/api/ctxPks/:id", contextPackController::getContextPack);
 
     // Delete the specified user
     server.delete("/api/users/:id", userController::deleteUser);

@@ -112,7 +112,7 @@ public class MongoSpec {
       new Document()
         .append("name", "sight words")
         .append("icon", "eye.png")
-        .append("enabled", true)
+        .append("enabled", false)
         //.append("wordlists", ...)
         );
 
@@ -163,7 +163,7 @@ public class MongoSpec {
   }
 
   @Test
-  public void over25SortedByName() {
+  public void falseSortedByName() {
     FindIterable<Document> documents
       = userDocuments.find(gt("age", 25))
       .sort(Sorts.ascending("name"));
@@ -285,115 +285,28 @@ public class MongoSpec {
   }
 
   @Test
-  public void shouldBeThreeTrue() {
+  public void shouldBeTwoTrue() {
     FindIterable<Document> documents = ctxPkDocuments.find(eq("enabled", true));
     int numberOfCtxPks = countCtxPks(documents);
-    assertEquals(3, numberOfCtxPks, "Should be 3 enabled");
+    assertEquals(2, numberOfCtxPks, "Should be 2 enabled");
   }
 
   @Test
-  public void over25SortedByName() {
-    FindIterable<Document> documents
-      = userDocuments.find(gt("age", 25))
-      .sort(Sorts.ascending("name"));
+  public void trueSortedByName() {
+    FindIterable<Document> documents = ctxPkDocuments.find(eq("enabled", true)).sort(Sorts.ascending("name"));
     List<Document> docs = intoList(documents);
     assertEquals(2, docs.size(), "Should be 2");
-    assertEquals("Jamie", docs.get(0).get("name"), "First should be Jamie");
-    assertEquals("Pat", docs.get(1).get("name"), "Second should be Pat");
+    assertEquals("Birthday Pack", docs.get(0).get("name"), "First should be Birthday Pack");
+    assertEquals("farm", docs.get(1).get("name"), "Second should be farm");
   }
 
   @Test
-  public void over25AndIbmers() {
-    FindIterable<Document> documents
-      = userDocuments.find(and(gt("age", 25),
-      eq("company", "IBM")));
-    List<Document> docs = intoList(documents);
-    assertEquals(1, docs.size(), "Should be 1");
-    assertEquals("Pat", docs.get(0).get("name"), "First should be Pat");
-  }
-
-  @Test
-  public void justNameAndEmail() {
-    FindIterable<Document> documents
-      = userDocuments.find().projection(fields(include("name", "email")));
+  public void justNameAndIcon() {
+    FindIterable<Document> documents = ctxPkDocuments.find().projection(fields(include("name", "icon")));
     List<Document> docs = intoList(documents);
     assertEquals(3, docs.size(), "Should be 3");
-    assertEquals("Chris", docs.get(0).get("name"), "First should be Chris");
-    assertNotNull(docs.get(0).get("email"), "First should have email");
-    assertNull(docs.get(0).get("company"), "First shouldn't have 'company'");
-    assertNotNull(docs.get(0).get("_id"), "First should have '_id'");
+    assertEquals("Birthday Pack", docs.get(0).get("name"), "First should be Birthday Pack");
+    assertNotNull(docs.get(0).get("icon"), "First should have icon");
+    assertNull(docs.get(0).get("enabled"), "First shouldn't have 'enabled'");
   }
-
-  @Test
-  public void justNameAndEmailNoId() {
-    FindIterable<Document> documents
-      = userDocuments.find()
-      .projection(fields(include("name", "email"), excludeId()));
-    List<Document> docs = intoList(documents);
-    assertEquals(3, docs.size(), "Should be 3");
-    assertEquals("Chris", docs.get(0).get("name"), "First should be Chris");
-    assertNotNull(docs.get(0).get("email"), "First should have email");
-    assertNull(docs.get(0).get("company"), "First shouldn't have 'company'");
-    assertNull(docs.get(0).get("_id"), "First should not have '_id'");
-  }
-
-  @Test
-  public void justNameAndEmailNoIdSortedByCompany() {
-    FindIterable<Document> documents
-      = userDocuments.find()
-      .sort(Sorts.ascending("company"))
-      .projection(fields(include("name", "email"), excludeId()));
-    List<Document> docs = intoList(documents);
-    assertEquals(3, docs.size(), "Should be 3");
-    assertEquals("Jamie", docs.get(0).get("name"), "First should be Jamie");
-    assertNotNull(docs.get(0).get("email"), "First should have email");
-    assertNull(docs.get(0).get("company"), "First shouldn't have 'company'");
-    assertNull(docs.get(0).get("_id"), "First should not have '_id'");
-  }
-
-  @Test
-  public void ageCounts() {
-    AggregateIterable<Document> documents
-      = userDocuments.aggregate(
-      Arrays.asList(
-        /*
-         * Groups data by the "age" field, and then counts
-         * the number of documents with each given age.
-         * This creates a new "constructed document" that
-         * has "age" as it's "_id", and the count as the
-         * "ageCount" field.
-         */
-        Aggregates.group("$age",
-          Accumulators.sum("ageCount", 1)),
-        Aggregates.sort(Sorts.ascending("_id"))
-      )
-    );
-    List<Document> docs = intoList(documents);
-    assertEquals(2, docs.size(), "Should be two distinct ages");
-    assertEquals(docs.get(0).get("_id"), 25);
-    assertEquals(docs.get(0).get("ageCount"), 1);
-    assertEquals(docs.get(1).get("_id"), 37);
-    assertEquals(docs.get(1).get("ageCount"), 2);
-  }
-
-  @Test
-  public void averageAge() {
-    AggregateIterable<Document> documents
-      = userDocuments.aggregate(
-      Arrays.asList(
-        Aggregates.group("$company",
-          Accumulators.avg("averageAge", "$age")),
-        Aggregates.sort(Sorts.ascending("_id"))
-      ));
-    List<Document> docs = intoList(documents);
-    assertEquals(3, docs.size(), "Should be three companies");
-
-    assertEquals("Frogs, Inc.", docs.get(0).get("_id"));
-    assertEquals(37.0, docs.get(0).get("averageAge"));
-    assertEquals("IBM", docs.get(1).get("_id"));
-    assertEquals(37.0, docs.get(1).get("averageAge"));
-    assertEquals("UMM", docs.get(2).get("_id"));
-    assertEquals(25.0, docs.get(2).get("averageAge"));
-  }
-
 }
