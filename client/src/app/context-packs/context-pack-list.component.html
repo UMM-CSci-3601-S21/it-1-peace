@@ -28,18 +28,20 @@
 </div>
 
 <div fxLayout="row">
-      <!-- List view -->
-      <mat-card>
-        <mat-card-content>
-          <mat-nav-list class="context-pack-nav-list">
-            <h3 mat-subheader>Context packs</h3>
-            <a mat-list-item *ngFor="let contextPack of this.filteredCtxPks" [routerLink]="['/ctxPks', contextPack._id]" class="context-pack-list-item">
-              <h3 matLine class="context-pack-list-name"> {{contextPack.name}} </h3>
-              <p matLine class="context-pack-list-enabled"> {{contextPack.enabled}} </p>
-            </a>
-          </mat-nav-list>
-        </mat-card-content>
-      </mat-card>
+  <div fxLayout="row wrap" fxLayoutGap="10px" class="user-cards-container">
+    <mat-card>
+      <mat-card-content>
+        <mat-nav-list class="context-pack-nav-list">
+          <h3 mat-subheader>Context packs</h3>
+          <a mat-list-item *ngFor="let contextPack of this.filteredCtxPks" [routerLink]="['/ctxPks', contextPack._id]" class="context-pack-list-item">
+            <img matListAvatar [src]="contextPack.icon" *ngIf="this.contextPack.icon">
+            <h3 matLine class="context-pack-list-name"> {{contextPack.name}} </h3>
+            <p matLine class="context-pack-list-enabled"> {{contextPack.enabled}} </p>
+          </a>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
   <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
   <ng-template #usersError>
