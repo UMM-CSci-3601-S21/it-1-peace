@@ -4,7 +4,7 @@ import { CtxPk } from '../app/context-packs/context-pack';
 import { CtxPkService } from '../app/context-packs/context-pack.service';
 
 /**
- * A "mock" version of the `UserService` that can be used to test components
+ * A "mock" version of the `CtxPkService` that can be used to test components
  * without having to create an actual service.
  */
 @Injectable()
@@ -12,28 +12,25 @@ export class MockCtxPkService extends CtxPkService {
   static testCtxPks: CtxPk[] = [
     {
       _id: '',
-      $schema: '',
       name: '',
       icon: '',
-      enabled: true
-      //wordpacks: ?;//Will be a new type wordlists
+      enabled: true,
+      wordLists: []
     },
     {
       _id: '',
-      $schema: '',
       name: '',
       icon: '',
-      enabled: true
-      //wordpacks: ?;//Will be a new type wordlists
+      enabled: true,
+      wordLists: []
     },
     {
       _id: '',
-      $schema: '',
       name: '',
       icon: '',
-      enabled: true
-      //wordpacks: ?;//Will be a new type wordlists
-    }
+      enabled: true,
+      wordLists: []
+     }
   ];
 
   constructor() {

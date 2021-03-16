@@ -3,6 +3,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { CtxPk } from './context-pack';
 import { CtxPkService } from './context-pack.service';
+import { WordList } from '../word-lists/word-list';
+import { Word } from '../word-lists/word';
 
 describe('Context pack service: ', () => {
   // A small collection of test users
@@ -12,22 +14,43 @@ describe('Context pack service: ', () => {
       _id: 'birthday_id',
       name: 'Birthday Pack',
       icon: 'birthday.png',
-      enabled: true
-      //wordpacks: ""
+      enabled: true,
+      wordLists: [{
+        name: 'birthday_words',
+        enabled: true,
+        nouns: [{ word: 'cake', forms: ['cake', 'cakes']}],
+        verbs: [{ word: 'dance', forms: ['dance', 'dancing']}],
+        adjectives: [{ word: 'sweet', forms: ['sweet', 'sweetest']}],
+        misc: [{ word: 'hooray', forms: ['hooray']}]
+      }]
     },
     {
       _id: 'farm_id',
       name: 'farm',
       icon: 'barn.jpg',
-      enabled: true
-      //wordpacks: ""
+      enabled: true,
+      wordLists: [{
+        name: 'farm_words',
+        enabled: true,
+        nouns: [{ word: 'farm', forms: ['farm', 'farms']}],
+        verbs: [{ word: 'till', forms: ['till', 'tilling']}],
+        adjectives: [{ word: 'fresh', forms: ['fresh', 'freshest']}],
+        misc: [{ word: 'aaahh', forms: ['aaahh']}]
+      }]
     },
     {
       _id: 'jojo_id',
       name: 'Jojo Siwa',
       icon: 'jojo.png',
-      enabled: false
-      //wordpacks: ""
+      enabled: false,
+      wordLists: [{
+        name: 'jojos_words',
+        enabled: false,
+        nouns: [],
+        verbs: [],
+        adjectives: [],
+        misc: []
+      }]
     }
   ];
   let ctxPkService: CtxPkService;
