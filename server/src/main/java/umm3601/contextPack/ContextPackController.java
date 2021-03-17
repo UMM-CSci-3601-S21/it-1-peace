@@ -32,6 +32,7 @@ public class ContextPackController {
   private static final String NAME_KEY = "name";
   private static final String ICON_KEY = "icon";
   private static final String ENABLED_KEY = "enabled";
+  private static final String WORDLISTS_KEY = "wordlists";
 
 
   private final JacksonMongoCollection<ContextPack> contextPackCollection;
@@ -91,10 +92,6 @@ public class ContextPackController {
 
     if (ctx.queryParamMap().containsKey(NAME_KEY)) {
       filters.add(regex(NAME_KEY,  Pattern.quote(ctx.queryParam(NAME_KEY)), "i"));
-    }
-
-    if (ctx.queryParamMap().containsKey(ICON_KEY)) {
-      filters.add(regex(ICON_KEY,  Pattern.quote(ctx.queryParam(ICON_KEY)), "i"));
     }
 
     if (ctx.queryParamMap().containsKey(ENABLED_KEY)) {

@@ -24,11 +24,6 @@ export class CtxPkService {
       if (filters.enabled) {
         httpParams = httpParams.set('enabled', filters.enabled.toString());
       }
-      /* Wordpacks
-      if (filters.) {
-        httpParams = httpParams.set('enabled', filters.enabled);
-      }
-      */
     }
     return this.httpClient.get<CtxPk[]>(this.ctxPkUrl, {
       params: httpParams,
