@@ -1,7 +1,5 @@
 package umm3601.wordList;
 
-import umm3601.contextPack.*;
-
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -17,7 +15,7 @@ import com.mongodb.client.model.Sorts;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
-//import org.bson.types.ObjectId;
+import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
 //import io.javalin.http.BadRequestResponse;
@@ -40,14 +38,7 @@ public class WordListController {
    * @param database the database containing wordList data
    */
   public WordListController(MongoDatabase database) {
-    JacksonMongoCollection<ContextPack> contextPackCollection = JacksonMongoCollection.builder().build(database, "ctxPks", ContextPack.class);
-    wordListCollection = JacksonMongoCollection.builder().build(database, "wordlists", WordList.class);
-    for(ContextPack c: contextPackCollection.find()
-    .into(new ArrayList<>())) {
-      for(WordList wList: c.wordlists) {
-        wordListCollection.insert(wList);
-      }
-    }
+    wordListCollection = JacksonMongoCollection.builder().build(database, "ctxPks", WordList.class);
   }
 
   /**
