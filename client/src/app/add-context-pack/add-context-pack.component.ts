@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CtxPk } from './context-pack';
-import { CtxPkService } from './context-pack.service';
+import { CtxPk } from '../context-packs/context-pack';
+import { CtxPkService } from '../context-packs/context-pack.service';
 import { WordList } from '../word-lists/word-list';
 import { WordListService } from '../word-lists/word-list.service';
 

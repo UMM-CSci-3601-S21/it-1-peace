@@ -38,7 +38,7 @@ import { CtxPkListComponent } from './context-packs/context-pack-list.component'
 import { WordListService } from './word-lists/word-list.service';
 import { AddWordListComponent } from './word-lists/add-word-list.component';
 import { WordListComponent } from './word-lists/word-list.component';
-import { AddContextPackComponent } from './context-packs/add-context-pack.component';
+import { AddContextPackComponent } from './add-context-pack/add-context-pack.component';
 import { ContextPackProfileComponent } from './context-packs/context-pack-profile.component';
 import { ContextPackCardComponent } from './context-pack-card/context-pack-card.component';
 

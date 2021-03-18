@@ -8,7 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockCtxPkService } from 'src/testing/ctxPk.service.mock';
-import { CtxPkService } from './context-pack.service';
+import { CtxPkService } from '../context-packs/context-pack.service';
 import { AddContextPackComponent } from './add-context-pack.component';
 
 describe('AddContextPackComponent', () => {
