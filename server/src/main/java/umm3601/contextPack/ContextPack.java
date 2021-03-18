@@ -13,5 +13,5 @@ public class ContextPack {
   public String name;
   public String icon;
   public boolean enabled;
-  public Object[] wordlists;
+  public WordList[] wordlists;
 }
