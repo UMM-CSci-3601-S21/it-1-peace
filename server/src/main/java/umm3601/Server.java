@@ -12,6 +12,8 @@ import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 
 import umm3601.user.UserController;
+import umm3601.contextPack.ContextPackController;
+import umm3601.wordList.WordListController;
 
 public class Server {
 
@@ -37,6 +39,11 @@ public class Server {
     // Initialize dependencies
     UserController userController = new UserController(database);
 
+    ContextPackController contextPackController = new ContextPackController(database);
+
+    WordListController wordListController = new WordListController(database);
+
+
     Javalin server = Javalin.create(config -> {
       config.registerPlugin(new RouteOverviewPlugin("/api"));
     });
@@ -59,20 +66,42 @@ public class Server {
 
     // List users, filtered using query parameters
     server.get("/api/users", userController::getUsers);
+    server.get("/api/ctxPks", contextPackController::getContextPacks);
+
+    // List wordlists, filtered using query parameters
+    server.get("/api/ctxPks/:wordlists", wordListController::getWordLists);
 
     // Get the specified user
     server.get("/api/users/:id", userController::getUser);
+    server.get("/api/ctxPks/:id", contextPackController::getContextPack);
+
+    // Get a specified wordlist
+    server.get("/api/ctxPks/:wordlists/:name", wordListController::getWordList);
 
     // Delete the specified user
     server.delete("/api/users/:id", userController::deleteUser);
+
+    // Delete the specified wordlist
+    //server.delete("/api/wordlists/:id", wordListController::deleteWordList);
 
     // Add new user with the user info being in the JSON body
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
 
+    // Add new context pack
+    server.post("/api/ctxPks", contextPackController::addNewContextPack);
+
+    // Add new wordlist
+    //server.post("/api/ctxPks", wordListController::addNewWordList);
+
+    server.post("/api/ctxPks", contextPackController::addNewContextPack);
+
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
-      ctx.json(e); // you probably want to remove this in production
+      //ctx.json(e); // you probably want to remove this in production
     });
+
+
+
   }
 }

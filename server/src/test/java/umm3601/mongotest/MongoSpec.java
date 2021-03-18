@@ -40,6 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MongoSpec {
 
   private MongoCollection<Document> userDocuments;
+  private MongoCollection<Document> ctxPkDocuments;
 
   static MongoClient mongoClient;
   static MongoDatabase db;
@@ -67,6 +68,9 @@ public class MongoSpec {
   public void clearAndPopulateDB() {
     userDocuments = db.getCollection("users");
     userDocuments.drop();
+    ctxPkDocuments = db.getCollection("ctxPks");
+    ctxPkDocuments.drop();
+
     List<Document> testUsers = new ArrayList<>();
     testUsers.add(
       new Document()
@@ -88,6 +92,31 @@ public class MongoSpec {
         .append("email", "jamie@frogs.com"));
 
     userDocuments.insertMany(testUsers);
+
+    List<Document> testCtxPks = new ArrayList<>();
+    testCtxPks.add(
+      new Document()
+        .append("name", "Birthday Pack")
+        .append("icon", "birthday.png")
+        .append("enabled", true)
+        //.append("wordlists", ...)
+        );
+    testCtxPks.add(
+      new Document()
+        .append("name", "farm")
+        .append("icon", "barn.png")
+        .append("enabled", true)
+        //.append("wordlists", ...)
+        );
+    testCtxPks.add(
+      new Document()
+        .append("name", "sight words")
+        .append("icon", "eye.png")
+        .append("enabled", false)
+        //.append("wordlists", ...)
+        );
+
+    ctxPkDocuments.insertMany(testCtxPks);
   }
 
   private List<Document> intoList(MongoIterable<Document> documents) {
@@ -99,6 +128,17 @@ public class MongoSpec {
   private int countUsers(FindIterable<Document> documents) {
     List<Document> users = intoList(documents);
     return users.size();
+  }
+
+  private List<Document> ctxIntoList(MongoIterable<Document> documents) {
+    List<Document> ctxPks = new ArrayList<>();
+    documents.into(ctxPks);
+    return ctxPks;
+  }
+
+  private int countCtxPks(FindIterable<Document> documents) {
+    List<Document> ctxPks = ctxIntoList(documents);
+    return ctxPks.size();
   }
 
   @Test
@@ -123,7 +163,7 @@ public class MongoSpec {
   }
 
   @Test
-  public void over25SortedByName() {
+  public void falseSortedByName() {
     FindIterable<Document> documents
       = userDocuments.find(gt("age", 25))
       .sort(Sorts.ascending("name"));
@@ -227,4 +267,46 @@ public class MongoSpec {
     assertEquals(25.0, docs.get(2).get("averageAge"));
   }
 
+
+
+
+  @Test
+  public void shouldBeThreeCtxPks() {
+    FindIterable<Document> documents = ctxPkDocuments.find();
+    int numberOfCtxPks = countCtxPks(documents);
+    assertEquals(3, numberOfCtxPks, "Should be 3 total context packs");
+  }
+
+  @Test
+  public void shouldBeOneBirthday() {
+    FindIterable<Document> documents = ctxPkDocuments.find(eq("name", "Birthday Pack"));
+    int numberOfCtxPks = countCtxPks(documents);
+    assertEquals(1, numberOfCtxPks, "Should be 1 Birthday Pack");
+  }
+
+  @Test
+  public void shouldBeTwoTrue() {
+    FindIterable<Document> documents = ctxPkDocuments.find(eq("enabled", true));
+    int numberOfCtxPks = countCtxPks(documents);
+    assertEquals(2, numberOfCtxPks, "Should be 2 enabled");
+  }
+
+  @Test
+  public void trueSortedByName() {
+    FindIterable<Document> documents = ctxPkDocuments.find(eq("enabled", true)).sort(Sorts.ascending("name"));
+    List<Document> docs = intoList(documents);
+    assertEquals(2, docs.size(), "Should be 2");
+    assertEquals("Birthday Pack", docs.get(0).get("name"), "First should be Birthday Pack");
+    assertEquals("farm", docs.get(1).get("name"), "Second should be farm");
+  }
+
+  @Test
+  public void justName() {
+    FindIterable<Document> documents = ctxPkDocuments.find().projection(fields(include("name")));
+    List<Document> docs = intoList(documents);
+    assertEquals(3, docs.size(), "Should be 3");
+    assertEquals("Birthday Pack", docs.get(0).get("name"), "First should be Birthday Pack");
+    assertNotNull(docs.get(0).get("name"), "First should have name");
+    assertNull(docs.get(0).get("enabled"), "First shouldn't have 'enabled'");
+  }
 }

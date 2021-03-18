@@ -1,0 +1,87 @@
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+
+    <mat-card class="search-card">
+      <mat-card-title class="wordList-list-title">WordLists</mat-card-title>
+      <mat-card-content fxLayout="column" >
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <!-- Examples of filtering in Angular -->
+
+          <mat-form-field class="input-field">
+            <mat-label>Name</mat-label>
+            <input matInput data-test="wordListNameInput" placeholder="Filter by name"
+            [(ngModel)]="wordListName" (input)="updateFilter()">
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <!-- Examples of filtering on the server -->
+
+          <mat-form-field class="input-field">
+            <mat-label>Enabled</mat-label>
+            <mat-select (selectionChange)="getWordListsFromServer()" [(ngModel)]="wordListEnabled" data-test="wordListEnabledSelect">
+              <mat-option>--</mat-option>
+              <mat-option value="true">Enabled</mat-option>
+              <mat-option value="false">Disabled</mat-option>
+            </mat-select>
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <br>
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <label>View type: </label>
+          <mat-radio-group aria-label="View type" [(ngModel)]="viewType" data-test="viewTypeRadio">
+            <mat-radio-button value="card">Card</mat-radio-button>
+            <mat-radio-button value="list">List</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="serverFilteredWordLists; else wordListsError" >
+    <!-- Switch between card and list view based on the viewType variable, set above in the mar-radio-group -->
+    <div [ngSwitch]="viewType">
+
+      <!-- Card grid view -->
+
+
+      <!-- List view -->
+      <mat-card *ngSwitchCase="'list'">
+        <mat-card-content>
+          <mat-nav-list class="wordList-nav-list">
+            <h3 mat-subheader>WordLists</h3>
+            <a mat-list-item *ngFor="let wordList of this.filteredWordLists" [routerLink]="['/ctxPks', wordList.name]" class="wordList-list-item">
+              <h3 matLine class="wordList-list-name"> {{wordList.name}} </h3>
+              <p matLine class="wordList-list-enabled"> {{wordList.enabled}} </p>
+            </a>
+          </mat-nav-list>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+  </div>
+
+  <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
+  <ng-template #wordListsError>
+    <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="wordList-error">
+      <mat-error>
+        There are no Word Lists yet.
+      </mat-error>
+      <mat-error>
+        Please wait a bit and try again or start the server.
+      </mat-error>
+    </div>
+  </ng-template>
+
+</div>
+
+<button mat-fab class="add-wordList-fab" matTooltip="Add WordList" matTooltipPosition="left" routerLink="/word-lists/new" data-test="addWordListButton">
+    <mat-icon class="md-24" aria-label="Add WordList">add</mat-icon>
+</button>

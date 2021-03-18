@@ -33,6 +33,15 @@ import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 
+import { CtxPkService } from './context-packs/context-pack.service';
+import { CtxPkListComponent } from './context-packs/context-pack-list.component';
+import { WordListService } from './word-lists/word-list.service';
+import { AddWordListComponent } from './word-lists/add-word-list.component';
+import { WordListComponent } from './word-lists/word-list.component';
+import { AddContextPackComponent } from './add-context-pack/add-context-pack.component';
+import { ContextPackProfileComponent } from './context-packs/context-pack-profile.component';
+import { ContextPackCardComponent } from './context-pack-card/context-pack-card.component';
+
 const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
@@ -60,6 +69,12 @@ const MATERIAL_MODULES: any[] = [
     UserCardComponent,
     UserProfileComponent,
     AddUserComponent,
+    CtxPkListComponent,
+    WordListComponent,
+    AddWordListComponent,
+    AddContextPackComponent,
+    ContextPackProfileComponent,
+    ContextPackCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,9 +86,12 @@ const MATERIAL_MODULES: any[] = [
     HttpClientModule,
     MATERIAL_MODULES,
     LayoutModule,
+    MatCardModule,
   ],
   providers: [
-    UserService
+    UserService,
+    CtxPkService,
+    WordListService
   ],
   bootstrap: [AppComponent]
 })

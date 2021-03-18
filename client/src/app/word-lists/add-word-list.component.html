@@ -1,0 +1,78 @@
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+    <form [formGroup]="addWordListForm" (ngSubmit)="submitForm();">
+    <mat-card class="add-word-list-card">
+        <mat-card-header>
+          <mat-card-title class="add-word-list-title">New Word List</mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name"
+                  required>
+            <mat-error *ngFor="let validation of addWordListValidationMessages.name">
+              <mat-error class="error-message" data-test="nameError"
+                        *ngIf="addWordListForm.get('name').hasError(validation.type) && (addWordListForm.get('name').dirty || addWordListForm.get('name').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>nouns</mat-label>
+            <input matInput placeholder="nouns"
+                  formControlName="nouns">
+            <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>verbs</mat-label>
+            <input matInput placeholder="verbs"
+                  formControlName="verbs">
+            <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>adjectives</mat-label>
+            <input matInput placeholder="adjectives"
+                  formControlName="adjectives">
+            <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>misc</mat-label>
+            <input matInput placeholder="misc"
+                  formControlName="misc">
+            <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Enabled</mat-label>
+            <mat-select required formControlName="enabled">
+              <mat-option value="true">Enabled</mat-option>
+              <mat-option value="false">Disabled</mat-option>
+            </mat-select>
+            <mat-error *ngIf="addWordListForm.get('enabled').hasError('required')">You must make a selection</mat-error>
+            <mat-error *ngIf="addWordListForm.get('enabled').hasError('pattern') && !addWordListForm.get('enabled').hasError('required')">
+              Your selection is invalid
+            </mat-error>
+          </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            [disabled]="!addWordListForm.valid"
+            type="submit"
+            data-test="confirmAddWordListButton"
+          >
+            ADD Word List
+          </button>
+        </mat-card-actions>
+    </mat-card>
+  </form>
+  </div>
+</div>
+
