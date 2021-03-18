@@ -92,7 +92,9 @@ public class Server {
     server.post("/api/ctxPks", contextPackController::addNewContextPack);
 
     // Add new wordlist
-    server.post("/api/ctxPks/:wordlists", wordListController::addNewWordList);
+    //server.post("/api/ctxPks", wordListController::addNewWordList);
+
+    server.post("/api/ctxPks", contextPackController::addNewContextPack);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);

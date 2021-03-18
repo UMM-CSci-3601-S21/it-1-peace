@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CtxPk } from '../context-packs/context-pack';
 import { CtxPkService } from '../context-packs/context-pack.service';
 import { WordList } from '../word-lists/word-list';
-import { WordListService } from '../word-lists/word-list.service';
+
 
 @Component({
   selector: 'app-add-context-pack',
@@ -58,7 +58,23 @@ export class AddContextPackComponent implements OnInit {
       enabled: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^(true|false)$')
-      ]))
+      ])),
+
+      nouns: new FormControl('', Validators.compose([
+
+      ])),
+
+      verbs: new FormControl('', Validators.compose([
+
+      ])),
+
+      adjectives: new FormControl('', Validators.compose([
+
+      ])),
+
+      misc: new FormControl('', Validators.compose([
+
+      ])),
     });
 
   }

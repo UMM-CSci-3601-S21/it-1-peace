@@ -108,16 +108,19 @@ public class ContextPackController {
       .into(new ArrayList<>()));
   }
 
-  /**
+  /*
    * Get a JSON response with a list of all the users.
    *
    * @param ctx a Javalin HTTP context
    */
-
-  public void addNewWordList(Context ctx) {
-    ContextPack newWordList = ctx.bodyValidator(ContextPack.class)
+  /*
+  public void addNewUser(Context ctx) {
+    User newUser = ctx.bodyValidator(User.class)
       .check(usr -> usr.name != null && usr.name.length() > 0) //Verify that the user has a name that is not blank
-      .check(usr -> usr.enabled || !usr.enabled) // Verify that the provided email is a valid email
+      .check(usr -> usr.email.matches(emailRegex)) // Verify that the provided email is a valid email
+      .check(usr -> usr.age > 0) // Verify that the provided age is > 0
+      .check(usr -> usr.role.matches("^(admin|editor|viewer)$")) // Verify that the role is one of the valid roles
+      .check(usr -> usr.company != null && usr.company.length() > 0) // Verify that the user has a company that is not blank
       .get();
 
     contextPackCollection.insertOne(newWordList);
@@ -139,7 +142,7 @@ public class ContextPackController {
 
     contextPackCollection.insertOne(newContextPack);
     ctx.status(201);
-    ctx.json(ImmutableMap.of("name", newContextPack));
+    ctx.json(ImmutableMap.of("id", newContextPack._id));
   }
 
 
