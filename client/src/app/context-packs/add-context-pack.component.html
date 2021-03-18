@@ -1,6 +1,6 @@
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-    <form [formGroup]="addWordListForm" (ngSubmit)="submitForm();">
+    <form [formGroup]="addContextPackForm" (ngSubmit)="submitForm();">
     <mat-card class="add-word-list-card">
         <mat-card-header>
           <mat-card-title class="add-word-list-title">New Word List</mat-card-title>
@@ -12,7 +12,7 @@
                   required>
             <mat-error *ngFor="let validation of addWordListValidationMessages.name">
               <mat-error class="error-message" data-test="nameError"
-                        *ngIf="addWordListForm.get('name').hasError(validation.type) && (addWordListForm.get('name').dirty || addWordListForm.get('name').touched)">
+                        *ngIf="addContextPackForm.get('name').hasError(validation.type) && (addContextPackForm.get('name').dirty || addContextPackForm.get('name').touched)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -52,8 +52,8 @@
               <mat-option value="true">Enabled</mat-option>
               <mat-option value="false">Disabled</mat-option>
             </mat-select>
-            <mat-error *ngIf="addWordListForm.get('enabled').hasError('required')">You must make a selection</mat-error>
-            <mat-error *ngIf="addWordListForm.get('enabled').hasError('pattern') && !addWordListForm.get('enabled').hasError('required')">
+            <mat-error *ngIf="addContextPackForm.get('enabled').hasError('required')">You must make a selection</mat-error>
+            <mat-error *ngIf="addContextPackForm.get('enabled').hasError('pattern') && !addContextPackForm.get('enabled').hasError('required')">
               Your selection is invalid
             </mat-error>
           </mat-form-field>
@@ -64,7 +64,7 @@
             mat-button
             type="button"
             color="primary"
-            [disabled]="!addWordListForm.valid"
+            [disabled]="!addContextPackForm.valid"
             type="submit"
             data-test="confirmAddWordListButton"
           >

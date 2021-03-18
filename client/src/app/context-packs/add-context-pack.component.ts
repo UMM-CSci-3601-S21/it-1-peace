@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { WordList } from '../word-lists/word-list';
-import { WordListService } from '../word-lists/word-list.service';
+import { CtxPkService } from './context-pack.service';
 
 @Component({
   selector: 'app-add-context-pack',
@@ -30,7 +30,10 @@ export class AddContextPackComponent implements OnInit {
     ]
   };
 
-  constructor(private fb: FormBuilder, private wordListService: WordListService, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private fb: FormBuilder,
+    private contextPackService: CtxPkService,
+    private snackBar: MatSnackBar,
+    private router: Router) {
   }
 
   createForms() {
@@ -56,7 +59,23 @@ export class AddContextPackComponent implements OnInit {
       enabled: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^(true|false)$')
-      ]))
+      ])),
+
+      nouns: new FormControl('', Validators.compose([
+
+      ])),
+
+      verbs: new FormControl('', Validators.compose([
+
+      ])),
+
+      adjectives: new FormControl('', Validators.compose([
+
+      ])),
+
+      misc: new FormControl('', Validators.compose([
+
+      ])),
     });
 
   }
@@ -66,11 +85,11 @@ export class AddContextPackComponent implements OnInit {
   }
 
   submitForm() {
-    this.wordListService.addWordList(this.addContextPackForm.value).subscribe(newID => {
+    this.contextPackService.addWordList(this.addContextPackForm.value).subscribe(newID => {
       this.snackBar.open('Added Wordlist ' + this.addContextPackForm.value.name, null, {
         duration: 2000,
       });
-      this.router.navigate(['/wordlists/', newID]);
+      this.router.navigate(['/context-packs/', newID]);
     }, err => {
       this.snackBar.open('Failed to add the wordlist to context pack', 'OK', {
         duration: 5000,

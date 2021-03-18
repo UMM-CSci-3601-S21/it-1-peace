@@ -56,7 +56,7 @@ export class CtxPkService {
 
   addWordList(newWordList: WordList): Observable<string> {
     // Send post request to add a new user with the user data as the body.
-    return this.httpClient.post<{name: string}>(this.ctxPkUrl, newWordList).pipe(map(res => res.name));
+    return this.httpClient.post<{id: string}>(this.ctxPkUrl, newWordList).pipe(map(res => res.id));
   }
 
 }
