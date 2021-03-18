@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CtxPk } from './context-pack';
 import { map } from 'rxjs/operators';
+import { WordList } from '../word-lists/word-list';
 
 @Injectable()
 export class CtxPkService {
@@ -52,10 +53,10 @@ export class CtxPkService {
 
     return filteredCtxPks;
   }
-/*
-  addUser(newUser: User): Observable<string> {
+
+  addWordList(newWordList: WordList): Observable<string> {
     // Send post request to add a new user with the user data as the body.
-    return this.httpClient.post<{id: string}>(this.userUrl, newUser).pipe(map(res => res.id));
+    return this.httpClient.post<{name: string}>(this.ctxPkUrl, newWordList).pipe(map(res => res.name));
   }
-*/
+
 }

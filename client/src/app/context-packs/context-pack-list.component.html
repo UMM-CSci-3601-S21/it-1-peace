@@ -20,14 +20,33 @@
             [(ngModel)]="ctxPkEnabled" (input)="updateFilter()">
           </mat-form-field>
         </div>
+
+        <br>
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+          <label>View type: </label>
+          <mat-radio-group aria-label="View type" [(ngModel)]="viewType" data-test="viewTypeRadio">
+            <mat-radio-button value="card">Card</mat-radio-button>
+            <mat-radio-button value="list">List</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
       </mat-card-content>
     </mat-card>
   </div>
 </div>
 
 <div fxLayout="row">
-  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-    <mat-card>
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="serverFilteredCtxPks; else " >
+    <!-- Switch between card and list view based on the viewType variable, set above in the mar-radio-group -->
+    <div [ngSwitch]="viewType">
+
+      <!-- Card grid view -->
+      <div *ngSwitchCase="'card'" fxLayout="row wrap" fxLayoutGap="10px" class="user-cards-container">
+        <app-context-pack-card simple="true" *ngFor="let ctxPk of filteredCtxPks" class="user-card" [ctxPk]="ctxPk" fxFlex="1 1 280px"></app-context-pack-card>
+      </div>
+
+      <!-- List view -->
+      <mat-card *ngSwitchCase="'list'">
       <mat-card-content>
         <mat-nav-list>
           <h3 mat-subheader>Context Packs</h3>
