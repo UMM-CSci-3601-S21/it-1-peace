@@ -3,6 +3,8 @@ package umm3601.contextPack;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
+import umm3601.wordList.WordList;
+
 public class ContextPack {
 
   @ObjectId @Id
@@ -11,4 +13,5 @@ public class ContextPack {
   public String name;
   public String icon;
   public boolean enabled;
+  public WordList[] wordlists;
 }

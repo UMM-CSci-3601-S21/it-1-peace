@@ -1,5 +1,7 @@
 package umm3601.wordList;
 
+import umm3601.contextPack.*;
+
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
@@ -38,27 +40,13 @@ public class WordListController {
    * @param database the database containing wordList data
    */
   public WordListController(MongoDatabase database) {
-    wordListCollection = JacksonMongoCollection.builder().build(database, "wordLists", WordList.class);
-  }
-
-  /**
-   * Get the single wordList specified by the `id` parameter in the request.
-   *
-   * @param ctx a Javalin HTTP context
-   */
-  public void getWordList(Context ctx) {
-    String id = ctx.pathParam("id");
-    WordList wordList;
-
-    try {
-      wordList = wordListCollection.find(eq("_id", new ObjectId(id))).first();
-    } catch(IllegalArgumentException e) {
-      throw new BadRequestResponse("The requested wordList id wasn't a legal Mongo Object ID.");
-    }
-    if (wordList == null) {
-      throw new NotFoundResponse("The requested wordList was not found");
-    } else {
-      ctx.json(wordList);
+    JacksonMongoCollection<ContextPack> contextPackCollection = JacksonMongoCollection.builder().build(database, "ctxPks", ContextPack.class);
+    wordListCollection = JacksonMongoCollection.builder().build(database, "wordlists", WordList.class);
+    for(ContextPack c: contextPackCollection.find()
+    .into(new ArrayList<>())) {
+      for(WordList wList: c.wordlists) {
+        wordListCollection.insert(wList);
+      }
     }
   }
 
@@ -67,10 +55,12 @@ public class WordListController {
    *
    * @param ctx a Javalin HTTP context
    */
-  public void deleteWordList(Context ctx) {
+  public void deleteWordList(Context ctx) { /*
     String id = ctx.pathParam("id");
-    wordListCollection.deleteOne(eq("_id", new ObjectId(id)));
+    wordListCollection.deleteOne(eq("_id", new ObjectId(id))); */
   }
+
+  public void getWordList(Context ctx) {}
 
   /**
    * Get a JSON response with a list of all the wordLists.
@@ -110,7 +100,6 @@ public class WordListController {
 
     wordListCollection.insertOne(newWordList);
     ctx.status(201);
-    ctx.json(ImmutableMap.of("id", newWordList._id));
   }
 
   /**
