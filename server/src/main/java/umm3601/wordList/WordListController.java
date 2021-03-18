@@ -51,13 +51,13 @@ public class WordListController {
   }
 
   /**
-   * Delete the wordList specified by the `id` parameter in the request.
+   * Delete the wordList specified by the `name` parameter in the request.
    *
    * @param ctx a Javalin HTTP context
    */
-  public void deleteWordList(Context ctx) { /*
-    String id = ctx.pathParam("id");
-    wordListCollection.deleteOne(eq("_id", new ObjectId(id))); */
+  public void deleteWordList(Context ctx) {
+    String name = ctx.pathParam("name");
+    wordListCollection.deleteOne(eq("name", new ObjectId(name)));
   }
 
   public void getWordList(Context ctx) {}
