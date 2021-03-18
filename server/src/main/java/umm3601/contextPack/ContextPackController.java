@@ -113,15 +113,34 @@ public class ContextPackController {
    *
    * @param ctx a Javalin HTTP context
    */
-
-  public void addNewContextPack(Context ctx) {
-    ContextPack newCtxPk = ctx.bodyValidator(ContextPack.class)
-      .check(ctxPk -> ctxPk.name != null && ctxPk.name.length() > 0) //Verify that the user has a name that is not blank
-      .check(ctxPk -> ctxPk.enabled == true || false) // Verify that the provided email is a valid email
-      .check(ctxPk -> ctxPk.icon != null && ctxPk.icon.length() > 0)
+  /*
+  public void addNewUser(Context ctx) {
+    User newUser = ctx.bodyValidator(User.class)
+      .check(usr -> usr.name != null && usr.name.length() > 0) //Verify that the user has a name that is not blank
+      .check(usr -> usr.email.matches(emailRegex)) // Verify that the provided email is a valid email
+      .check(usr -> usr.age > 0) // Verify that the provided age is > 0
+      .check(usr -> usr.role.matches("^(admin|editor|viewer)$")) // Verify that the role is one of the valid roles
+      .check(usr -> usr.company != null && usr.company.length() > 0) // Verify that the user has a company that is not blank
       .get();
 
-    contextPackCollection.insertOne(newCtxPk);
+    contextPackCollection.insertOne(newWordList);
+    ctx.status(201);
+    ctx.json(ImmutableMap.of("wordlists", newWordList.wordlists));
+  }
+
+  /**
+   * Get a JSON response with a list of all the users.
+   *
+   * @param ctx a Javalin HTTP context
+   */
+
+  public void addNewContextPack(Context ctx) {
+    ContextPack newContextPack = ctx.bodyValidator(ContextPack.class)
+      .check(usr -> usr.name != null && usr.name.length() > 0) //Verify that the user has a name that is not blank
+      .check(usr -> usr.enabled || !usr.enabled) // Verify that the provided email is a valid email
+      .get();
+
+    contextPackCollection.insertOne(newContextPack);
     ctx.status(201);
     ctx.json(ImmutableMap.of("id", newCtxPk._id));
   }

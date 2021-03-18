@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CtxPk } from './context-pack';
+import { CtxPkService } from './context-pack.service';
 import { WordList } from '../word-lists/word-list';
 import { CtxPkService } from './context-pack.service';
 
@@ -14,9 +16,9 @@ export class AddContextPackComponent implements OnInit {
 
   addContextPackForm: FormGroup;
 
-  wordList: WordList;
+  contextPack: CtxPk;
 
-  addWordListValidationMessages = {
+  addContextPackValidationMessages = {
     name: [
       {type: 'required', message: 'Name is Required'},
       {type: 'minlength', message: 'Name must be at least 2 characters long'},
@@ -30,10 +32,7 @@ export class AddContextPackComponent implements OnInit {
     ]
   };
 
-  constructor(private fb: FormBuilder,
-    private contextPackService: CtxPkService,
-    private snackBar: MatSnackBar,
-    private router: Router) {
+  constructor(private fb: FormBuilder, private contextPackService: CtxPkService, private snackBar: MatSnackBar, private router: Router) {
   }
 
   createForms() {
@@ -86,12 +85,12 @@ export class AddContextPackComponent implements OnInit {
 
   submitForm() {
     this.contextPackService.addWordList(this.addContextPackForm.value).subscribe(newID => {
-      this.snackBar.open('Added Wordlist ' + this.addContextPackForm.value.name, null, {
+      this.snackBar.open('Added Context Pack ' + this.addContextPackForm.value.name, null, {
         duration: 2000,
       });
-      this.router.navigate(['/context-packs/', newID]);
+      this.router.navigate(['/ctxPks/', newID]);
     }, err => {
-      this.snackBar.open('Failed to add the wordlist to context pack', 'OK', {
+      this.snackBar.open('Failed to add the context pack', 'OK', {
         duration: 5000,
       });
     });

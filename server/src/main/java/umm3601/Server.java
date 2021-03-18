@@ -88,6 +88,9 @@ public class Server {
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
 
+    // Add new context pack
+    server.post("/api/ctxPks", contextPackController::addNewContextPack);
+
     // Add new wordlist
     //server.post("/api/ctxPks", wordListController::addNewWordList);
 
