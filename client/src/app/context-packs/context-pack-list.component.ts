@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CtxPk } from './context-pack';
 import { CtxPkService } from './context-pack.service';
 import { Subscription } from 'rxjs';
+import { WordList } from '../word-lists/word-list';
 
 @Component({
   selector: 'app-context-pack-list-component',
@@ -18,7 +19,7 @@ export class CtxPkListComponent implements OnInit, OnDestroy  {
   public ctxPkName: string;
   public ctxPkIcon: string;
   public ctxPkEnabled: boolean;
-  //public ctxPkWordpakc: ?; //Will be a new type wordlists
+  public ctxPkWordlist: WordList;
   getCtxPksSub: Subscription;
 
 

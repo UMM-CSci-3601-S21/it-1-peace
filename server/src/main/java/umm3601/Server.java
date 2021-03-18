@@ -88,13 +88,15 @@ public class Server {
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
 
+    // Add new wordlist
+    server.post("/api/wordlists", wordListController::addNewWordList);
+
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
       //ctx.json(e); // you probably want to remove this in production
     });
 
-    // Add new wordlist
-    server.post("/api/wordlists", wordListController::addNewWordList);
+
 
   }
 }

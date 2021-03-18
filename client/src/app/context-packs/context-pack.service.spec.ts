@@ -193,7 +193,7 @@ describe('Context pack service: ', () => {
   });
 
   /*
-  it('addcTXpK() posts to api/context-packs', () => {
+  it('addCtxPk() posts to api/context-packs', () => {
 
     ctxPkService.addCtxPk(testCtxPks[1]).subscribe(
       id => expect(id).toBe('testid')

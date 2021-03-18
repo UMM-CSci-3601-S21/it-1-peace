@@ -180,8 +180,9 @@ public class ContextPackControllerSpec {
     assertThrows(BadRequestResponse.class, () -> {
       ctxPkController.getContextPacks(ctx);
     });
-  }//
+  }*/
 
+  /* UNNESSARY, NEVER TO TO SEARCH BY ICON
   @Test
   public void GetCtxPksByIcon() throws IOException {
 
@@ -198,7 +199,7 @@ public class ContextPackControllerSpec {
     for (ContextPack ctxPk : resultCtxPks) {
       assertEquals("birthday.png", ctxPk.icon);
     }
-  }
+  }*/
 
   @Test
   public void GetCtxPksByEnabled() throws IOException {
