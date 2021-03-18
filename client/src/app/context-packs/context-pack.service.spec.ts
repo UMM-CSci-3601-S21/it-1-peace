@@ -184,8 +184,8 @@ describe('Context pack service: ', () => {
 
   it('filterCtxPks() filters by enabled', () => {
     expect(testCtxPks.length).toBe(3);
-    const ctxPkEnabled = false;
-    expect(ctxPkService.filterCtxPks(testCtxPks, { enabled: ctxPkEnabled }).length).toBe(1);
+    const ctxPkEnabled = true;
+    expect(ctxPkService.filterCtxPks(testCtxPks, { enabled: ctxPkEnabled }).length).toBe(2);
   });
 
   it('filterCtxPks() filters by name and enabled', () => {

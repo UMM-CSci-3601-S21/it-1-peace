@@ -149,7 +149,7 @@ describe('Word list service: ', () => {
     // Specify that (exactly) one request will be made to the specified URL with the role parameter.
     const req = httpTestingController.expectOne(
       (request) => request.url.startsWith(wordListService.wordListUrl)
-        && request.params.has('name') && request.params.has('farm_equipment') && request.params.has('enabled')
+        && request.params.has('name') && request.params.has('enabled')
     );
 
     // Check that the request made to that URL was a GET request.

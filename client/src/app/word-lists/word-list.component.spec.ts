@@ -61,20 +61,20 @@ describe('WordList list', () => {
     });
   }));
 
-  it('contains all the users', () => {
-    expect(wordLists.serverFilteredWordLists.length).toBe(3);
+  it('contains all the word lists', () => {
+    expect(wordLists.serverFilteredWordLists.length).toBe(2);
   });
 
-  it('contains a user named \'Chris\'', () => {
-    expect(wordLists.serverFilteredWordLists.some((user: WordList) => user.name === 'Chris')).toBe(true);
+  it('contains a word list named \'farm_animals\'', () => {
+    expect(wordLists.serverFilteredWordLists.some((wordList: WordList) => wordList.name === 'farm_animals')).toBe(true);
   });
 
-  it('contain a user named \'Jamie\'', () => {
-    expect(wordLists.serverFilteredWordLists.some((user: WordList) => user.name === 'Jamie')).toBe(true);
+  it('contain a word list named \'farm_equipment\'', () => {
+    expect(wordLists.serverFilteredWordLists.some((wordList: WordList) => wordList.name === 'farm_equipment')).toBe(true);
   });
 
-  it('doesn\'t contain a user named \'Santa\'', () => {
-    expect(wordLists.serverFilteredWordLists.some((user: WordList) => user.name === 'Santa')).toBe(false);
+  it('doesn\'t contain a word list named \'Santa\'', () => {
+    expect(wordLists.serverFilteredWordLists.some((wordList: WordList) => wordList.name === 'Santa')).toBe(false);
   });
 });
 

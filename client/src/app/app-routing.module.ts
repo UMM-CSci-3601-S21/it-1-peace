@@ -7,7 +7,7 @@ import { AddUserComponent } from './users/add-user.component';
 
 import { CtxPkListComponent } from './context-packs/context-pack-list.component';
 import { WordListComponent } from './word-lists/word-list.component';
-import { AddWordListComponent } from './add-word-list/add-word-list.component';
+import { AddWordListComponent } from './word-lists/add-word-list.component';
 import { AddContextPackComponent } from './add-context-pack/add-context-pack.component';
 
 
