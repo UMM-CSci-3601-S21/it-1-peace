@@ -1,0 +1,13 @@
+<mat-card class="user-card" *ngIf="this.ctxPk">
+  <mat-card-header>
+    <img mat-card-avatar [src]="this.ctxPk.icon" class="user-avatar" *ngIf="this.ctxPk.icon">
+    <mat-card-title class="user-card-name">{{ this.ctxPk.name }}</mat-card-title>
+    <mat-card-subtitle class="user-card-company">{{ this.ctxPk.enabled }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content *ngIf="!this.simple">
+    <p>Role: <span class="user-card-role">{{ this.ctxPk.wordLists }}</span></p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button data-test="viewProfileButton" *ngIf="this.simple" [routerLink]="['/ctxPk', this.ctxPk._id]">View Profile</button>
+  </mat-card-actions>
+</mat-card>

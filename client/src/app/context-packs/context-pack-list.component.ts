@@ -21,6 +21,7 @@ export class CtxPkListComponent implements OnInit, OnDestroy  {
   public ctxPkEnabled: boolean;
   public ctxPkWordlist: WordList;
   getCtxPksSub: Subscription;
+  public viewType: 'card' | 'list' = 'card';
 
 
   // Inject the UserService into this component.

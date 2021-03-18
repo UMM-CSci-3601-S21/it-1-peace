@@ -47,7 +47,7 @@ export class WordListService {
 
   addWordList(newWordList: WordList): Observable<string> {
     // Send post request to add a new user with the user data as the body.
-    return this.httpClient.post<{id: string}>(this.wordListUrl, newWordList).pipe(map(res => res.id));
+    return this.httpClient.post<{name: string}>(this.wordListUrl, newWordList).pipe(map(res => res.name));
   }
 
 }
