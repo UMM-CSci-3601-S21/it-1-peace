@@ -84,7 +84,7 @@ const MATERIAL_MODULES: any[] = [
   providers: [
     UserService,
     CtxPkService,
-    WordListService    
+    WordListService
   ],
   bootstrap: [AppComponent]
 })

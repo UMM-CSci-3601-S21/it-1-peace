@@ -1,5 +1,6 @@
 package umm3601.contextPack;
 
+import umm3601.wordList.*;
 import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -87,21 +88,21 @@ public class ContextPackControllerSpec {
         .append("name", "Birthday Pack")
         .append("icon", "birthday.png")
         .append("enabled", true)
-        // .append("wordlists", ...)
+        .append("wordlists", new WordList[1])
         );
     testCtxPks.add(
       new Document()
         .append("name", "farm")
         .append("icon", "barn.png")
         .append("enabled", true)
-        // .append("wordlists", ...)
+        .append("wordlists", new WordList[1])
         );
     testCtxPks.add(
       new Document()
         .append("name", "sight words")
         .append("icon", "eye.png")
         .append("enabled", false)
-        // .append("wordlists", ...)
+        .append("wordlists", new WordList[1])
         );
 
     jojoId = new ObjectId();
@@ -110,8 +111,8 @@ public class ContextPackControllerSpec {
         .append("_id", jojoId)
         .append("name", "Jojo Siwa")
         .append("icon", "jojo.png")
-        .append("enabled", true);
-        // .append("wordlists", ...)
+        .append("enabled", true)
+        .append("wordlists", new WordList[1]);
 
 
     ctxPkDocuments.insertMany(testCtxPks);
