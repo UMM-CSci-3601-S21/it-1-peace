@@ -12,7 +12,7 @@ import { WordListService } from '../word-lists/word-list.service';
 })
 export class AddContextPackComponent implements OnInit {
 
-  addWordListForm: FormGroup;
+  addContextPackForm: FormGroup;
 
   wordList: WordList;
 
@@ -35,7 +35,7 @@ export class AddContextPackComponent implements OnInit {
 
   createForms() {
 
-    this.addWordListForm = this.fb.group({
+    this.addContextPackForm = this.fb.group({
       name: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2),
@@ -66,8 +66,8 @@ export class AddContextPackComponent implements OnInit {
   }
 
   submitForm() {
-    this.wordListService.addWordList(this.addWordListForm.value).subscribe(newID => {
-      this.snackBar.open('Added Wordlist ' + this.addWordListForm.value.name, null, {
+    this.wordListService.addWordList(this.addContextPackForm.value).subscribe(newID => {
+      this.snackBar.open('Added Wordlist ' + this.addContextPackForm.value.name, null, {
         duration: 2000,
       });
       this.router.navigate(['/wordlists/', newID]);

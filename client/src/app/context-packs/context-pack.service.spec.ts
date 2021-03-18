@@ -182,6 +182,12 @@ describe('Context pack service: ', () => {
     expect(ctxPkService.filterCtxPks(testCtxPks, { name: ctxPkName }).length).toBe(2);
   });
 
+  it('filterCtxPks() filters by invalid', () => {
+    expect(testCtxPks.length).toBe(3);
+    const ctxPkName = '!';
+    expect(ctxPkService.filterCtxPks(testCtxPks, { name: ctxPkName }).length).toBe(0);
+  });
+
   it('filterCtxPks() filters by enabled', () => {
     expect(testCtxPks.length).toBe(3);
     const ctxPkEnabled = true;

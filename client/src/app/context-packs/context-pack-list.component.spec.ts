@@ -76,7 +76,7 @@ describe('Context pack list', () => {
     expect(ctxPkList.serverFilteredCtxPks.some((ctxPk: CtxPk) => ctxPk.name === 'Santa')).toBe(false);
   });
 
-  it('has two context packs that are enabled', () => {
+  it('has three context packs that are enabled', () => {
     expect(ctxPkList.serverFilteredCtxPks.filter((ctxPk: CtxPk) => ctxPk.enabled === true).length).toBe(3);
   });
 

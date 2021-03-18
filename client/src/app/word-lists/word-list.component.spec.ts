@@ -76,6 +76,10 @@ describe('WordList list', () => {
   it('doesn\'t contain a word list named \'Santa\'', () => {
     expect(wordLists.serverFilteredWordLists.some((wordList: WordList) => wordList.name === 'Santa')).toBe(false);
   });
+
+  it('has two context packs that are enabled', () => {
+    expect(wordLists.serverFilteredWordLists.filter((wordList: WordList) => wordList.enabled === true).length).toBe(2);
+  });
 });
 
 describe('Misbehaving WordList List', () => {
