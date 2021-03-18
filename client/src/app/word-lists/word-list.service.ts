@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class WordListService {
-  readonly wordListUrl: string = environment.apiUrl + 'word-list';
+  readonly wordListUrl: string = environment.apiUrl + 'ctxPks';
 
   constructor(private httpClient: HttpClient) {
   }
