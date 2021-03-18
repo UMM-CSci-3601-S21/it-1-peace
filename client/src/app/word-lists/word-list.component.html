@@ -72,8 +72,7 @@
   <ng-template #wordListsError>
     <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="wordList-error">
       <mat-error>
-        There was a problem loading the wordLists. Possibly the server is down or perhaps there are network
-        issues.
+        There are no Word Lists yet.
       </mat-error>
       <mat-error>
         Please wait a bit and try again or start the server.
@@ -83,6 +82,6 @@
 
 </div>
 
-<button mat-fab class="add-wordList-fab" matTooltip="Add WordList" matTooltipPosition="left" routerLink="/wordLists/new" data-test="addWordListButton">
+<button mat-fab class="add-wordList-fab" matTooltip="Add WordList" matTooltipPosition="left" routerLink="/word-lists/new" data-test="addWordListButton">
     <mat-icon class="md-24" aria-label="Add WordList">add</mat-icon>
 </button>
