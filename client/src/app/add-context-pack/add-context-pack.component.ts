@@ -6,16 +6,15 @@ import { WordList } from '../word-lists/word-list';
 import { WordListService } from '../word-lists/word-list.service';
 
 @Component({
-  selector: 'app-add-word-list',
-  templateUrl: './add-word-list.component.html',
-  styleUrls: ['./add-word-list.component.scss']
+  selector: 'app-add-context-pack',
+  templateUrl: './add-context-pack.component.html',
+  styleUrls: ['./add-context-pack.component.scss']
 })
-export class AddWordListComponent implements OnInit {
+export class AddContextPackComponent implements OnInit {
 
   addWordListForm: FormGroup;
 
-  wordlist: WordList;
-
+  wordList: WordList;
 
   addWordListValidationMessages = {
     name: [
@@ -73,7 +72,7 @@ export class AddWordListComponent implements OnInit {
       });
       this.router.navigate(['/wordlists/', newID]);
     }, err => {
-      this.snackBar.open('Failed to add the wordlist', 'OK', {
+      this.snackBar.open('Failed to add the wordlist to context pack', 'OK', {
         duration: 5000,
       });
     });

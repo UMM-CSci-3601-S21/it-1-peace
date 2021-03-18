@@ -69,27 +69,27 @@ public class Server {
     server.get("/api/ctxPks", contextPackController::getContextPacks);
 
     // List wordlists, filtered using query parameters
-    server.get("/api/wordlists", wordListController::getWordLists);
+    server.get("/api/ctxPks/:wordlists", wordListController::getWordLists);
 
     // Get the specified user
     server.get("/api/users/:id", userController::getUser);
     server.get("/api/ctxPks/:id", contextPackController::getContextPack);
 
     // Get a specified wordlist
-    server.get("/api/wordlists/:id", wordListController::getWordList);
+    server.get("/api/ctxPks/:wordlists/:name", wordListController::getWordList);
 
     // Delete the specified user
     server.delete("/api/users/:id", userController::deleteUser);
 
     // Delete the specified wordlist
-    server.get("/api/wordlists/:id", wordListController::deleteWordList);
+    server.get("/api/ctxPks/:wordlists/:name", wordListController::deleteWordList);
 
     // Add new user with the user info being in the JSON body
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
 
     // Add new wordlist
-    server.post("/api/wordlists", wordListController::addNewWordList);
+    server.post("/api/ctxPks/:wordlists", wordListController::addNewWordList);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
