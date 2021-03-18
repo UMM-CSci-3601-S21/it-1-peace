@@ -175,11 +175,11 @@
     "schema": "./schema/pack.schema.json",
     "name": "Jojo Siwa",
     "icon": "jojo.png",
-    "enabled": true,
+    "enabled": false,
     "wordlists": [
       {
         "name": "jojo",
-        "enabled": true,
+        "enabled": false,
 
         "nouns": [
           { "word": "JoJo", "forms": ["JoJo"] },

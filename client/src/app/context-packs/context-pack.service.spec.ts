@@ -178,7 +178,7 @@ describe('Context pack service: ', () => {
 
   it('filterCtxPks() filters by name', () => {
     expect(testCtxPks.length).toBe(3);
-    const ctxPkName = 'a';
+    const ctxPkName = 'r';
     expect(ctxPkService.filterCtxPks(testCtxPks, { name: ctxPkName }).length).toBe(2);
   });
 

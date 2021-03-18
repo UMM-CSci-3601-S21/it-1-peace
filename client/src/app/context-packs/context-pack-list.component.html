@@ -12,14 +12,12 @@
             <mat-label>Name</mat-label>
             <input matInput data-test="ctxPkNameInput" placeholder="Filter by name"
             [(ngModel)]="ctxPkName" (input)="updateFilter()">
-            <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
 
           <mat-form-field class="input-field">
             <mat-label>Enabled</mat-label>
             <input matInput data-test="ctxPkEnabledInput" placeholder="Filter by enabled"
             [(ngModel)]="ctxPkEnabled" (input)="updateFilter()">
-            <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
         </div>
       </mat-card-content>
@@ -33,9 +31,14 @@
       <mat-card-content>
         <mat-nav-list>
           <h3 mat-subheader>Context Packs</h3>
-          <a mat-list-item *ngFor="let ctxPk of this.filteredCtxPks" [routerLink]="['/ctsPks', ctxPk._id]" class="ctxPk-list-item">
+          <a mat-list-item *ngFor="let ctxPk of this.filteredCtxPks" [routerLink]="['/ctxPks', ctxPk._id]" class="ctxPk-list-item">
             <h3 matLine class="ctxPk-list-name"> {{ctxPk.name}} </h3>
             <p matLine class="ctxPk-list-enabled"> {{ctxPk.enabled}} </p>
+            HII
+            <b *ngFor="let wordlist of ctxPk.wordLists">
+              hi
+              {{ wordlist.name }}
+            </b>
           </a>
         </mat-nav-list>
       </mat-card-content>

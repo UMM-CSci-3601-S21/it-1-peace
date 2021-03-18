@@ -82,7 +82,7 @@ public class Server {
     server.delete("/api/users/:id", userController::deleteUser);
 
     // Delete the specified wordlist
-    server.get("/api/wordlists/:id", wordListController::deleteWordList);
+    server.delete("/api/wordlists/:id", wordListController::deleteWordList);
 
     // Add new user with the user info being in the JSON body
     // of the HTTP request

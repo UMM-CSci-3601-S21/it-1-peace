@@ -57,7 +57,7 @@
         <mat-card-content>
           <mat-nav-list class="wordList-nav-list">
             <h3 mat-subheader>WordLists</h3>
-            <a mat-list-item *ngFor="let wordList of this.filteredWordLists" [routerLink]="['/wordLists', wordList._id]" class="wordList-list-item">
+            <a mat-list-item *ngFor="let wordList of this.filteredWordLists" class="wordList-list-item">
               <h3 matLine class="wordList-list-name"> {{wordList.name}} </h3>
               <p matLine class="wordList-list-enabled"> {{wordList.enabled}} </p>
             </a>

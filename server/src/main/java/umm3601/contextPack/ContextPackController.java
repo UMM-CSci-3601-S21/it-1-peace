@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.google.common.collect.ImmutableMap;
+//import com.google.common.collect.ImmutableMap;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 
@@ -30,9 +30,9 @@ import io.javalin.http.NotFoundResponse;
 public class ContextPackController {
 
   private static final String NAME_KEY = "name";
-  private static final String ICON_KEY = "icon";
+  //private static final String ICON_KEY = "icon";
   private static final String ENABLED_KEY = "enabled";
-  private static final String WORDLISTS_KEY = "wordlists";
+  //private static final String WORDLISTS_KEY = "wordlists";
 
 
   private final JacksonMongoCollection<ContextPack> contextPackCollection;

@@ -301,12 +301,12 @@ public class MongoSpec {
   }
 
   @Test
-  public void justNameAndIcon() {
-    FindIterable<Document> documents = ctxPkDocuments.find().projection(fields(include("name", "icon")));
+  public void justName() {
+    FindIterable<Document> documents = ctxPkDocuments.find().projection(fields(include("name")));
     List<Document> docs = intoList(documents);
     assertEquals(3, docs.size(), "Should be 3");
     assertEquals("Birthday Pack", docs.get(0).get("name"), "First should be Birthday Pack");
-    assertNotNull(docs.get(0).get("icon"), "First should have icon");
+    assertNotNull(docs.get(0).get("name"), "First should have name");
     assertNull(docs.get(0).get("enabled"), "First shouldn't have 'enabled'");
   }
 }
