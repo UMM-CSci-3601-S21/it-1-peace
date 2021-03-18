@@ -88,21 +88,21 @@ public class ContextPackControllerSpec {
         .append("name", "Birthday Pack")
         .append("icon", "birthday.png")
         .append("enabled", true)
-        .append("wordlists", new WordList[1])
+        //.append("wordlists", new WordList[1])
         );
     testCtxPks.add(
       new Document()
         .append("name", "farm")
         .append("icon", "barn.png")
         .append("enabled", true)
-        .append("wordlists", new WordList[1])
+        //.append("wordlists", new WordList[1])
         );
     testCtxPks.add(
       new Document()
         .append("name", "sight words")
         .append("icon", "eye.png")
         .append("enabled", false)
-        .append("wordlists", new WordList[1])
+        //.append("wordlists", new WordList[1])
         );
 
     jojoId = new ObjectId();
@@ -111,8 +111,8 @@ public class ContextPackControllerSpec {
         .append("_id", jojoId)
         .append("name", "Jojo Siwa")
         .append("icon", "jojo.png")
-        .append("enabled", true)
-        .append("wordlists", new WordList[1]);
+        .append("enabled", true);
+        //.append("wordlists", new WordList[1]);
 
 
     ctxPkDocuments.insertMany(testCtxPks);
