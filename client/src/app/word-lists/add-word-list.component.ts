@@ -57,6 +57,22 @@ export class AddWordListComponent implements OnInit {
       enabled: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^(true|false)$')
+      ])),
+
+      nouns: new FormControl('', Validators.compose([
+
+      ])),
+
+      verbs: new FormControl('', Validators.compose([
+
+      ])),
+
+      adjectives: new FormControl('', Validators.compose([
+
+      ])),
+
+      misc: new FormControl('', Validators.compose([
+
       ]))
     });
 

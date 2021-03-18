@@ -169,8 +169,8 @@ describe('Word list service: ', () => {
 
   it('filterWordLists() filters by enabled', () => {
     expect(testWordLists.length).toBe(2);
-    const wordListEnabled = false;
-    expect(wordListService.filterWordLists(testWordLists, { enabled: wordListEnabled }).length).toBe(0);
+    const wordListEnabled = true;
+    expect(wordListService.filterWordLists(testWordLists, { enabled: wordListEnabled }).length).toBe(2);
   });
 
   it('filterWordLists() filters by name and enabled', () => {

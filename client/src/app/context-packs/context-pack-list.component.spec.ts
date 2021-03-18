@@ -77,7 +77,7 @@ describe('Context pack list', () => {
   });
 
   it('has two context packs that are enabled', () => {
-    expect(ctxPkList.serverFilteredCtxPks.filter((ctxPk: CtxPk) => ctxPk.enabled === true).length).toBe(2);
+    expect(ctxPkList.serverFilteredCtxPks.filter((ctxPk: CtxPk) => ctxPk.enabled === true).length).toBe(3);
   });
 
 });
