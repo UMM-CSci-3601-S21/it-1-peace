@@ -13,6 +13,7 @@ describe('Context pack service: ', () => {
     {
       _id: 'birthday_id',
       name: 'Birthday Pack',
+      schema: './schema/pack.schema.json',
       icon: 'birthday.png',
       enabled: true,
       wordLists: [{
@@ -27,6 +28,7 @@ describe('Context pack service: ', () => {
     {
       _id: 'farm_id',
       name: 'farm',
+      schema: './schema/pack.schema.json',
       icon: 'barn.jpg',
       enabled: true,
       wordLists: [{
@@ -41,6 +43,7 @@ describe('Context pack service: ', () => {
     {
       _id: 'jojo_id',
       name: 'Jojo Siwa',
+      schema: './schema/pack.schema.json',
       icon: 'jojo.png',
       enabled: false,
       wordLists: [{
