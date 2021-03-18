@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-//import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 
@@ -113,28 +113,35 @@ public class ContextPackController {
    *
    * @param ctx a Javalin HTTP context
    */
-  /*
-  public void addNewUser(Context ctx) {
-    User newUser = ctx.bodyValidator(User.class)
+
+  public void addNewWordList(Context ctx) {
+    ContextPack newWordList = ctx.bodyValidator(ContextPack.class)
       .check(usr -> usr.name != null && usr.name.length() > 0) //Verify that the user has a name that is not blank
-      .check(usr -> usr.email.matches(emailRegex)) // Verify that the provided email is a valid email
-      .check(usr -> usr.age > 0) // Verify that the provided age is > 0
-      .check(usr -> usr.role.matches("^(admin|editor|viewer)$")) // Verify that the role is one of the valid roles
-      .check(usr -> usr.company != null && usr.company.length() > 0) // Verify that the user has a company that is not blank
+      .check(usr -> usr.enabled || !usr.enabled) // Verify that the provided email is a valid email
       .get();
 
-    // Generate user avatar (you won't need this part for todos)
-    try {
-      newUser.avatar = "https://gravatar.com/avatar/" + md5(newUser.email) + "?d=identicon";  // generate unique md5 code for identicon
-    } catch (NoSuchAlgorithmException ignored) {
-      newUser.avatar = "https://gravatar.com/avatar/?d=mp";                           // set to mystery person
-    }
-
-    userCollection.insertOne(newUser);
+    contextPackCollection.insertOne(newWordList);
     ctx.status(201);
-    ctx.json(ImmutableMap.of("id", newUser._id));
+    ctx.json(ImmutableMap.of("wordlists", newWordList.wordlists));
   }
-  */
+
+  /**
+   * Get a JSON response with a list of all the users.
+   *
+   * @param ctx a Javalin HTTP context
+   */
+
+  public void addNewContextPack(Context ctx) {
+    ContextPack newContextPack = ctx.bodyValidator(ContextPack.class)
+      .check(usr -> usr.name != null && usr.name.length() > 0) //Verify that the user has a name that is not blank
+      .check(usr -> usr.enabled || !usr.enabled) // Verify that the provided email is a valid email
+      .get();
+
+    contextPackCollection.insertOne(newContextPack);
+    ctx.status(201);
+    ctx.json(ImmutableMap.of("name", newContextPack));
+  }
+
 
   /**
    * Utility function to generate the md5 hash for a given string

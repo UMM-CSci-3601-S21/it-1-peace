@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { CtxPk } from '../context-packs/context-pack';
+import { CtxPkService } from '../context-packs/context-pack.service';
 import { WordList } from '../word-lists/word-list';
 import { WordListService } from '../word-lists/word-list.service';
 
@@ -12,11 +14,11 @@ import { WordListService } from '../word-lists/word-list.service';
 })
 export class AddContextPackComponent implements OnInit {
 
-  addWordListForm: FormGroup;
+  addContextPackForm: FormGroup;
 
-  wordList: WordList;
+  contextPack: CtxPk;
 
-  addWordListValidationMessages = {
+  addContextPackValidationMessages = {
     name: [
       {type: 'required', message: 'Name is Required'},
       {type: 'minlength', message: 'Name must be at least 2 characters long'},
@@ -30,12 +32,12 @@ export class AddContextPackComponent implements OnInit {
     ]
   };
 
-  constructor(private fb: FormBuilder, private wordListService: WordListService, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private fb: FormBuilder, private contextPackService: CtxPkService, private snackBar: MatSnackBar, private router: Router) {
   }
 
   createForms() {
 
-    this.addWordListForm = this.fb.group({
+    this.addContextPackForm = this.fb.group({
       name: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2),
@@ -66,13 +68,13 @@ export class AddContextPackComponent implements OnInit {
   }
 
   submitForm() {
-    this.wordListService.addWordList(this.addWordListForm.value).subscribe(newID => {
-      this.snackBar.open('Added Wordlist ' + this.addWordListForm.value.name, null, {
+    this.contextPackService.addWordList(this.addContextPackForm.value).subscribe(newID => {
+      this.snackBar.open('Added Context Pack ' + this.addContextPackForm.value.name, null, {
         duration: 2000,
       });
-      this.router.navigate(['/wordlists/', newID]);
+      this.router.navigate(['/ctxPks/', newID]);
     }, err => {
-      this.snackBar.open('Failed to add the wordlist to context pack', 'OK', {
+      this.snackBar.open('Failed to add the context pack', 'OK', {
         duration: 5000,
       });
     });
