@@ -27,13 +27,19 @@
   </div>
 </div>
 
-<div fxLayout="row wrap" fxLayoutGap="10px" class="context-pack-display">
-
-  <mat-card *ngFor="let ctxPk of this.filteredCtxPks">
-    <h2>{{ctxPk.name}}</h2>
-  </mat-card>
-    <h3>HIIIII</h3>
-
-
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+    <mat-card>
+      <mat-card-content>
+        <mat-nav-list>
+          <h3 mat-subheader>Context Packs</h3>
+          <a mat-list-item *ngFor="let ctxPk of this.filteredCtxPks" [routerLink]="['/ctsPks', ctxPk._id]" class="ctxPk-list-item">
+            <h3 matLine class="ctxPk-list-name"> {{ctxPk.name}} </h3>
+            <p matLine class="ctxPk-list-enabled"> {{ctxPk.enabled}} </p>
+          </a>
+        </mat-nav-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
