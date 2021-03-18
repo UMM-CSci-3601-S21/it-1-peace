@@ -46,7 +46,7 @@ describe('AddContextPackComponent', () => {
     expect(addContextPackForm.controls).toBeDefined();
   });
 
-  /*
+
   it('should create the component and form', () => {
     expect(addContextPackComponent).toBeTruthy();
     expect(addContextPackForm).toBeTruthy();
@@ -135,5 +135,5 @@ describe('AddContextPackComponent', () => {
       expect(enabledControl.valid).toBeFalsy();
     });
   });
-  */
+
 });

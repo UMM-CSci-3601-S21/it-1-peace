@@ -142,7 +142,7 @@ public class ContextPackController {
 
     contextPackCollection.insertOne(newContextPack);
     ctx.status(201);
-    ctx.json(ImmutableMap.of("id", newCtxPk._id));
+    ctx.json(ImmutableMap.of("id", newContextPack._id));
   }
 
 

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { CtxPk } from './context-pack';
 import { CtxPkService } from './context-pack.service';
 import { WordList } from '../word-lists/word-list';
-import { CtxPkService } from './context-pack.service';
+
 
 @Component({
   selector: 'app-add-context-pack',
