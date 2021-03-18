@@ -7,6 +7,7 @@ import { WordListService } from './word-list.service';
 describe('Word list service: ', () => {
   const testWordLists: WordList[] = [
     {
+      _id: '123abc',
       name: 'farm_animals',
       enabled: true,
       nouns: [
@@ -39,6 +40,7 @@ describe('Word list service: ', () => {
     },
 
     {
+      _id: 'abc123',
       name: 'farm_equipment',
       enabled: true,
       nouns: [
